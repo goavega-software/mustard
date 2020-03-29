@@ -1,0 +1,40 @@
+package jobs
+
+import (
+	mustardcore "mustard/core"
+
+	"github.com/mmcdole/gofeed"
+)
+
+type blogItem struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Link        string `json:"url"`
+}
+
+type blogData struct {
+	Title string     `json:"title"`
+	Items []blogItem `json:"items"`
+}
+
+var blogURL = "https://www.goavega.com/feed"
+
+func init() {
+	mustardcore.AddJob("@every 1m", func() {
+		fp := gofeed.NewParser()
+		feed, _ := fp.ParseURL(blogURL)
+		slicedItems := feed.Items[1:4]
+		var (
+			blog  blogData
+			items []blogItem
+		)
+
+		blog = blogData{Title: feed.Title}
+		for _, item := range slicedItems {
+			items = append(items, blogItem{Title: item.Title, Description: item.Description, Link: item.Link})
+		}
+		blog.Items = items
+		data := mustardcore.EventData{Event: "blogRoll", Data: blog}
+		mustardcore.SseNotify(data)
+	})
+}

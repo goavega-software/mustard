@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
+    <style>
+        h3 {
+            font-size: 30px;
+        }
+        
+        h2 {
+            font-size: 45px;
+        }
+        
+        .container {
+            height: 100vh;
+            background: #eee;
+        }
+        
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            height: calc(100vh/3);
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 1;
+            padding: 5px;
+        }
+        
+        .column>div {
+            border: solid 1px red;
+            height: 100%;
+        }
+        
+        .blue-column {
+            background: #2481b7;
+        }
+        
+        .orange-column {
+            /*background: #0e626a;*/
+            background: url('https://picsum.photos/200/300');
+            background-size: cover;
+        }
+        
+        .green-column {
+            background-color: #a81c52;
+        }
+        
+        .column.xx {
+            flex: 2;
+        }
+        
+        .center {
+            display: flex;
+            align-items: center;
+        }
+        
+        .center>div {
+            text-align: center;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='row'>
+            <div class='column'>
+                <div class='orange-column center'>
+                    <div>
+                        <h3>Bangalore</h3>
+                        <h2>33 Deg</h2>
+                    </div>
+                </div>
+            </div>
+            <div class='column xx'>
+                <div class='blue-column'>
+                    Some Text in Column Two
+                </div>
+            </div>
+            <div class='column'>
+                <div class='green-column'>
+                    Some Text in Column Three
+                </div>
+            </div>
+        </div>
+        <div class='row 2'>
+            <div class='column'>
+                <div class='green-column'>
+                    Some Text in Row 2, Column One
+                </div>
+            </div>
+            <div class='column'>
+                <div class='orange-column'>
+                    Some Text in Row 2, Column Two
+                </div>
+            </div>
+            <div class='column'>
+                <div class='blue-column'>
+                    Some Text in Row2, Column Three
+                </div>
+            </div>
+        </div>
+        <div class='row 2'>
+            <div class='column'>
+                <div class='green-column'>
+                    Some Text in Row 2, Column One
+                </div>
+            </div>
+            <div class='column'>
+                <div class='orange-column'>
+                    Some Text in Row 2, Column Two
+                </div>
+            </div>
+            <div class='column'>
+                <div class='blue-column'>
+                    Some Text in Row2, Column Three
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        e = new EventSource('/events/dunno');
+        e.onmessage = (event) => console.log('event received', event.data);
+    </script>
+</body>
