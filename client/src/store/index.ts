@@ -13,6 +13,7 @@ export default new VueX.Store({
   },
   mutations: {
     change(state, payload: eventType<object>) {
+      // @ts-ignore
       state[payload.event] = payload.data;
     }
   },

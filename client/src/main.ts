@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./store/";
+// @ts-ignore
 import VueSSE from "vue-sse";
 import VueApexCharts from "vue-apexcharts";
 

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { VueConstructor } from "vue/types/umd";
 import { BaseUrl } from "../constants";
-const eventUrl = `${BaseUrl}events/dunno`;
+const eventUrl = `${BaseUrl}events/dashboard`;
 type VueSSE = VueConstructor<Vue> & {
   SSE: (
     url: string,
@@ -21,7 +21,6 @@ export class EventSink {
       withCredentials: true
     });
     this.server.subscribe("", (message: any) => {
-      console.log("received ", message);
       onMessage(message);
     });
   }

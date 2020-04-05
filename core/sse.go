@@ -29,7 +29,7 @@ func SseInit(e *echo.Echo) {
 }
 
 /*
-SseNotify does nothing (for now)
+SseNotify sends SSE with payload
 */
 func SseNotify(payload EventData) {
 	if server == nil {
@@ -38,7 +38,7 @@ func SseNotify(payload EventData) {
 	go func() {
 		payload, _ := json.Marshal(payload)
 		fmt.Println(string(payload))
-		server.SendMessage(fmt.Sprintf("/events/%s", "dunno"), sse.SimpleMessage(string(payload)))
+		server.SendMessage(fmt.Sprintf("/events/%s", "dashboard"), sse.SimpleMessage(string(payload)))
 	}()
 }
 
