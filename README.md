@@ -1,6 +1,8 @@
 # Mustard
 Mustard is an awesome dashboard inspired by Dashing written in Go and VueJS.
 
+![screenshot](https://github.com/goavega-software/mustard/raw/master/client/public/screenshot.png)
+
 ## Anatomy
 Mustard primarily consists of 3 parts:
 1. UI widgets - written in VueJS and TypeScript
