@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop } from 'vue-property-decorator';
 type listItem = { title: string; description: string; url: string };
 @Component({
   filters: {
@@ -27,18 +27,17 @@ type listItem = { title: string; description: string; url: string };
 })
 export default class ListWidget extends Vue {
   @Prop() eventId?: string;
-  private model: { title: string; items: [] };
-  private item?: listItem = { title: "", description: "", url: "" };
+  private item: listItem = { title: '', description: '', url: '' };
   private timerId?: number;
   private index = -1;
-  get model() {
+  get model(): { title: string; items: [] } {
     if (this.timerId) {
       clearInterval(this.timerId);
     }
     this.timerId = setInterval(this.cycle, 10000);
     return (
-      this.$store.state[this.eventId || "undefined"] || {
-        title: "Hello",
+      this.$store.state[this.eventId || 'undefined'] || {
+        title: 'Hello',
         items: []
       }
     );
@@ -51,13 +50,14 @@ export default class ListWidget extends Vue {
     if (this.index > this.model.items.length) {
       this.index = 0;
     }
-    const item = this.model.items[this.index] ?? null;
+    const item: listItem = this.model.items[this.index];
     if (!item) {
       return;
     }
-    Vue.set(this.item, "title", item.title);
-    Vue.set(this.item, "description", item.description);
-    Vue.set(this.item, "url", item.url);
+    this.item = { ...item };
+    // Vue.set(this.item, "title", item.title);
+    // Vue.set(this.item, "description", item.description);
+    // Vue.set(this.item, "url", item.url);
   }
 }
 </script>

@@ -60,8 +60,11 @@ func init() {
 		weatherData.Description = weather.Weather[0].Description
 		weatherData.Icon = fmt.Sprintf("http://openweathermap.org/img/wn/%s@2x.png", weather.Weather[0].Icon)
 		// get the flickr data
-		flickr := mustardcore.Flickr{}
-		weatherData.Image = flickr.Get(weatherData.Description).GetUrl()
+		flickr := mustardcore.Flickr{Q: weatherData.Description}
+		photos := flickr.Get()
+		log.Println("photos are")
+		log.Println(photos)
+		weatherData.Image = mustardcore.TakeOne(photos).GetUrl()
 		data := mustardcore.EventData{Event: "weather", Data: weatherData}
 		mustardcore.SseNotify(data)
 

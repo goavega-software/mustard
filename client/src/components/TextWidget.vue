@@ -8,18 +8,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 type TextModel = { title: string; subtitle: string };
 @Component
 export default class TextWidget extends Vue {
   @Prop() private title?: string;
   @Prop() private subtitle?: string;
   @Prop() private eventId?: string;
-  private model: TextModel;
 
-  get model() {
+  get model(): TextModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      this.$store.state[this.eventId || 'undefined'] || {
         title: this.title,
         subtitle: this.subtitle
       }

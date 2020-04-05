@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 type comparisonModel = {
   newVal?: number;
   oldVal?: number;
@@ -24,16 +24,12 @@ type comparisonModel = {
 export default class ComparisonWidget extends Vue {
   @Prop() private new?: number;
   @Prop() private old?: number;
-  private threshold = 0.1;
+  @Prop() private threshold?: number;
   @Prop() private eventId?: string;
-  private model: comparisonModel;
-  private classes;
-  private series;
-  private chartOptions;
 
-  get model() {
+  get model(): comparisonModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      this.$store.state[this.eventId || 'undefined'] || {
         newValue: this.new,
         oldValue: this.old,
         delta: (this.new || 0) - (this.old || 0)
@@ -44,9 +40,10 @@ export default class ComparisonWidget extends Vue {
   get chartOptions() {
     return {
       chart: {
-        type: "bar",
+        type: 'bar',
         height: 350,
-        stacked: true
+        stacked: true,
+        toolbar: false
       },
       plotOptions: {
         bar: {
@@ -55,7 +52,7 @@ export default class ComparisonWidget extends Vue {
       },
       stroke: {
         width: 1,
-        colors: ["#fff"]
+        colors: ['#fff']
       },
       xaxis: {
         categories: [],
@@ -67,8 +64,8 @@ export default class ComparisonWidget extends Vue {
         opacity: 1
       },
       legend: {
-        position: "top",
-        horizontalAlign: "left",
+        position: 'top',
+        horizontalAlign: 'left',
         offsetX: 40
       },
       yaxis: {
@@ -80,11 +77,11 @@ export default class ComparisonWidget extends Vue {
   get series() {
     return [
       {
-        name: "yesterday",
+        name: 'yesterday',
         data: [this.model.oldVal || 0]
       },
       {
-        name: "today",
+        name: 'today',
         data: [this.model.newVal || 0]
       }
     ];
@@ -93,11 +90,12 @@ export default class ComparisonWidget extends Vue {
   get classes() {
     const newValue = this.model.newVal || 1,
       oldValue = this.model.oldVal || 1,
-      delta = (newValue - oldValue) / oldValue;
+      delta = (newValue - oldValue) / oldValue,
+      threshold = this.threshold || 1;
     return {
       center: true,
-      red: delta > this.threshold,
-      green: delta < this.threshold
+      red: delta > threshold,
+      green: delta < threshold
     };
   }
 }

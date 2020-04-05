@@ -12,9 +12,11 @@ import (
 	"net/url"
 )
 
-var flickrURL = "https://www.flickr.com/services/rest/?per_page=15&method=flickr.photos.search&format=json&text=%s&sort=interestingness-desc&api_key=%s&nojsoncallback=1"
+var flickrURL = "https://www.flickr.com/services/rest/?per_page=15&method=flickr.photos.search&format=json&sort=interestingness-desc&api_key=%s&nojsoncallback=1"
 
 type Flickr struct {
+	Q      string
+	UserID string
 }
 
 type apiPhotosResponse struct {
@@ -37,23 +39,35 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-func (f Flickr) Get(q string) ApiPhotoResponse {
+func (f Flickr) Get() []ApiPhotoResponse {
 	apiKey := GetEnvVariables().FlickrKey
-	response := ApiPhotoResponse{}
-	resp, err := http.Get(fmt.Sprintf(flickrURL, url.QueryEscape(q), apiKey))
+	filter := ""
+	if f.UserID != "" {
+		filter += "&user_id=" + f.UserID
+	}
+	if f.Q != "" {
+		filter += "&text=" + url.QueryEscape(f.Q)
+	}
+	query := fmt.Sprintf(flickrURL, apiKey) + filter
+	log.Println("flickr query", query)
+	resp, err := http.Get(query)
 	if err != nil {
 		log.Fatal(err)
-		return response
+		return nil
 	}
 	defer resp.Body.Close()
 	text, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
-		return response
+		return nil
 	}
 	apiResponse := apiSearchResponse{}
 	json.Unmarshal(text, &apiResponse)
-	return apiResponse.Photos.Photo[getRand(len(apiResponse.Photos.Photo)-1)]
+	return apiResponse.Photos.Photo
+}
+
+func TakeOne(photos []ApiPhotoResponse) ApiPhotoResponse {
+	return photos[getRand(len(photos)-1)]
 }
 
 func (p ApiPhotoResponse) GetUrl() string {

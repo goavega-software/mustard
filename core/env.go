@@ -10,6 +10,7 @@ type EnvVariables struct {
 	FlickrKey          string
 	OpenWeatherKey     string
 	OpenWeatherPlaceID int
+	FlickrUserID       string
 }
 
 var envVars *EnvVariables
@@ -26,5 +27,6 @@ func GetEnvVariables() EnvVariables {
 	log.Println(envVars.FlickrKey)
 	envVars.OpenWeatherKey = os.Getenv("OPENWEATHER_API_KEY")
 	envVars.OpenWeatherPlaceID, _ = strconv.Atoi(os.Getenv("OPENWEATHER_PLACE_ID"))
+	envVars.FlickrUserID = os.Getenv("FLICKR_USER_ID")
 	return *envVars
 }
