@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -25,11 +27,12 @@ func main() {
 
 	mustardcore.SseInit(e)
 	mustardcore.InitJobs()
+
 	defer mustardcore.SseDestroy()
 	defer mustardcore.DestroyJobs()
 	port := os.Getenv("PORT")
-	e.POST("/api/generate", func(c echo.Context) error {
-		//mustardcore.SseNotify("dunno", "hello world")
+	e.POST("/api/nudge", func(c echo.Context) error {
+		mustardcore.FireImmediately()
 		return c.HTML(200, "<p>Hello</p>")
 	})
 	if port == "" {

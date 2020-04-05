@@ -2,6 +2,7 @@ package jobs
 
 import (
 	mustardcore "mustard/core"
+	"regexp"
 
 	"github.com/mmcdole/gofeed"
 )
@@ -20,7 +21,8 @@ type blogData struct {
 var blogURL = "https://www.goavega.com/feed"
 
 func init() {
-	mustardcore.AddJob("@every 1m", func() {
+	mustardcore.AddJob("@every 1h", func() {
+		re := regexp.MustCompile(`<[^>]*>`)
 		fp := gofeed.NewParser()
 		feed, _ := fp.ParseURL(blogURL)
 		slicedItems := feed.Items[1:4]
@@ -31,7 +33,8 @@ func init() {
 
 		blog = blogData{Title: feed.Title}
 		for _, item := range slicedItems {
-			items = append(items, blogItem{Title: item.Title, Description: item.Description, Link: item.Link})
+			items = append(items, blogItem{Title: item.Title, Description: re.ReplaceAllString(item.Description, ""),
+				Link: mustardcore.QRAsDataURI(item.Link)})
 		}
 		blog.Items = items
 		data := mustardcore.EventData{Event: "blogRoll", Data: blog}

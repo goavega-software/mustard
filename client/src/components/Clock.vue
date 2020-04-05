@@ -8,7 +8,7 @@
     <div class="clock2">
       <h3>{{ model.date }}</h3>
       <h1>{{ model.time }}</h1>
-      <p class="muted">{{ numberTrivia.trivia }}</p>
+      <p class="muted text-center">{{ numberTrivia.trivia }}</p>
     </div>
     <div class="clock3" v-if="clockThreeModel">
       <h4>{{ clockThreeModel.date }}</h4>
@@ -86,7 +86,6 @@ export default class Clock extends Vue {
 <style scoped lang="scss">
 .clock {
   background: #264653;
-  font-family: monospace;
   display: flex;
   justify-content: center;
   align-items: center;

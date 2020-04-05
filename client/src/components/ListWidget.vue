@@ -4,7 +4,12 @@
     <transition name="slide-fade" mode="out-in">
       <div :key="index">
         <h4 v-if="item != undefined">{{ item.title }}</h4>
-        <p v-if="item != undefined">{{ item.description }}</p>
+        <img
+          v-if="item != undefined"
+          :src="item.url"
+          style="float:left;margin-right:5px"
+        />
+        <p v-if="item != undefined">{{ item.description | subString }}</p>
       </div>
     </transition>
   </div>
@@ -12,12 +17,18 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-type listItem = { title: string; description: string; link: string };
-@Component
+type listItem = { title: string; description: string; url: string };
+@Component({
+  filters: {
+    subString(s: string) {
+      return `${s.substr(0, 180)}...`;
+    }
+  }
+})
 export default class ListWidget extends Vue {
   @Prop() eventId?: string;
   private model: { title: string; items: [] };
-  private item?: listItem = { title: "", description: "" };
+  private item?: listItem = { title: "", description: "", url: "" };
   private timerId?: number;
   private index = -1;
   get model() {
@@ -40,8 +51,13 @@ export default class ListWidget extends Vue {
     if (this.index > this.model.items.length) {
       this.index = 0;
     }
-    Vue.set(this.item, "title", this.model.items[this.index].title);
-    Vue.set(this.item, "description", this.model.items[this.index].description);
+    const item = this.model.items[this.index] ?? null;
+    if (!item) {
+      return;
+    }
+    Vue.set(this.item, "title", item.title);
+    Vue.set(this.item, "description", item.description);
+    Vue.set(this.item, "url", item.url);
   }
 }
 </script>
@@ -49,9 +65,16 @@ export default class ListWidget extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .blogroll {
-  background: #2a9d8f;
+  background: #e76f51;
+  padding: 10px;
   h3 {
     text-align: center;
+  }
+  h4 {
+    padding: 10px;
+  }
+  p {
+    text-justify: distribute;
   }
 }
 .slide-fade-enter-active {

@@ -7,6 +7,8 @@ export default new VueX.Store({
         textWidget:{},
         clockWidget:{},
         blogRoll: {},
+        weather: {},
+        comparisonWidget: {},
     },
     mutations: {
         change(state, payload: eventType<object>) {

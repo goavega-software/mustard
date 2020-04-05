@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="column">
-        <ListWidget eventId="blogRoll" />
+      <div class="column y2">
+        <WeatherWidget eventId="weather" />
       </div>
       <div class="column y2">
         <Clock
@@ -11,14 +11,19 @@
           eventId="clockWidget"
         />
       </div>
-      <div class="column">
-        <TextWidget />
+      <div class="column y1">
+        <ListWidget eventId="blogRoll" />
       </div>
-      <div class="column">
-        <TextWidget title="Second" subtitle="Widget" />
+      <div class="column y1">
+        <ComparisonWidget
+          eventId="comparisonWidget"
+          threshold="0.25"
+          new="0"
+          old="0"
+        />
       </div>
-      <div class="column">
-        <TextWidget title="Another" subtitle="Widget" />
+      <div class="column x2 y1">
+        <TextWidget title="hello" subtitle="world" />
       </div>
     </div>
   </div>
@@ -29,16 +34,30 @@ import { Component, Vue } from "vue-property-decorator";
 import Clock from "./components/Clock.vue";
 import TextWidget from "./components/TextWidget.vue";
 import ListWidget from "./components/ListWidget.vue";
+import ComparisonWidget from "./components/ComparisonWidget.vue";
+import WeatherWidget from "./components/WeatherWidget.vue";
 import { EventSink, eventType } from "./eventsink";
+import { BaseUrl } from "./constants";
 @Component({
   components: {
     Clock,
     TextWidget,
-    ListWidget
+    ListWidget,
+    ComparisonWidget,
+    WeatherWidget
   }
 })
 export default class App extends Vue {
   private eventServer = new EventSink();
+  created() {
+    setTimeout(
+      async () =>
+        await fetch(`${BaseUrl}api/nudge`, {
+          method: "POST"
+        }),
+      1000
+    );
+  }
   mounted() {
     (async () => {
       await this.eventServer.init((message: eventType<object>) =>
@@ -83,6 +102,7 @@ $base: 20;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 4px;
   width: 100%;
+  grid-auto-rows: 1fr;
 }
 
 .column {
@@ -98,7 +118,9 @@ $base: 20;
     height: 100%;
   }
 }
-
+.text-center {
+  text-align: center;
+}
 .center {
   display: flex;
   align-items: center;

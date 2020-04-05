@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { VueConstructor } from 'vue/types/umd';
-const eventUrl = 'http://localhost:8090/events/dunno';
+import { BaseUrl } from "../constants";
+const eventUrl = `${BaseUrl}events/dunno`;
 type VueSSE = VueConstructor<Vue> & {
     SSE: (url: string, options: { format: string, withCredentials: boolean }) => Promise<any>;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="center red">
+  <div class="center blue">
     <div>
       <h4>{{ model.subtitle }}</h4>
       <h2>{{ model.title }}</h2>
@@ -9,13 +9,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+type TextModel = { title: string; subtitle: string };
 @Component
 export default class TextWidget extends Vue {
   @Prop() private title?: string;
   @Prop() private subtitle?: string;
   @Prop() private eventId?: string;
-  private model;
+  private model: TextModel;
 
   get model() {
     return (
@@ -30,7 +30,7 @@ export default class TextWidget extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.red {
+.blue {
   background: #2481b7;
 }
 </style>
