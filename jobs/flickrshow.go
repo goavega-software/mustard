@@ -5,10 +5,10 @@ import (
 )
 
 type slide struct {
-	url string
+	URL string `json:"url"`
 }
 type slideshow struct {
-	items []slide
+	Items []slide `json:"items"`
 }
 
 func init() {
@@ -18,9 +18,9 @@ func init() {
 		flickr := mustardcore.Flickr{UserID: flickrUser}
 		slideshow := slideshow{}
 		for _, item := range flickr.Get() {
-			items = append(items, slide{url: item.GetUrl()})
+			items = append(items, slide{URL: item.GetUrl()})
 		}
-		slideshow.items = items
+		slideshow.Items = items
 		data := mustardcore.EventData{Event: "slideshow", Data: slideshow}
 		mustardcore.SseNotify(data)
 

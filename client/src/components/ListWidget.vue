@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from "vue-property-decorator";
 type listItem = { title: string; description: string; url: string };
 @Component({
   filters: {
@@ -27,7 +27,7 @@ type listItem = { title: string; description: string; url: string };
 })
 export default class ListWidget extends Vue {
   @Prop() eventId?: string;
-  private item: listItem = { title: '', description: '', url: '' };
+  private item: listItem = { title: "", description: "", url: "" };
   private timerId?: number;
   private index = -1;
   get model(): { title: string; items: [] } {
@@ -36,8 +36,8 @@ export default class ListWidget extends Vue {
     }
     this.timerId = setInterval(this.cycle, 10000);
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
-        title: 'Hello',
+      this.$store.state[this.eventId || "undefined"] || {
+        title: "Hello",
         items: []
       }
     );

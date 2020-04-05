@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 type WeatherModel = {
   temp: number;
   desc: string;
@@ -21,9 +21,9 @@ export default class TextWidget extends Vue {
   @Prop() private eventId?: string;
   get model(): WeatherModel {
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
+      this.$store.state[this.eventId || "undefined"] || {
         temp: 0,
-        desc: '--'
+        desc: "--"
       }
     );
   }
@@ -32,7 +32,7 @@ export default class TextWidget extends Vue {
     return {
       background: this.model.image
         ? `url(${this.model.image}) no-repeat`
-        : '#1446a0'
+        : "#1446a0"
     };
   }
 }

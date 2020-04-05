@@ -22,26 +22,29 @@
           old="0"
         />
       </div>
-      <div class="column x2 y1">
+      <div class="column y1">
         <SlideshowWidget eventId="slideshow" />
       </div>
       <div class="column">
-        <TextWidget title="universe" subtitle="hello" />
+        <TextWidget title="Mustard" subtitle="hello" background="#ffdb58" />
+      </div>
+      <div class="column">
+        <TextWidget title="build?" subtitle="what will you" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Clock from './components/Clock.vue';
-import TextWidget from './components/TextWidget.vue';
-import ListWidget from './components/ListWidget.vue';
-import ComparisonWidget from './components/ComparisonWidget.vue';
-import WeatherWidget from './components/WeatherWidget.vue';
-import SlideshowWidget from './components/SlideshowWidget.vue';
-import { EventSink, eventType } from './eventsink';
-import { BaseUrl } from './constants';
+import { Component, Vue } from "vue-property-decorator";
+import Clock from "./components/Clock.vue";
+import TextWidget from "./components/TextWidget.vue";
+import ListWidget from "./components/ListWidget.vue";
+import ComparisonWidget from "./components/ComparisonWidget.vue";
+import WeatherWidget from "./components/WeatherWidget.vue";
+import SlideshowWidget from "./components/SlideshowWidget.vue";
+import { EventSink, eventType } from "./eventsink";
+import { BaseUrl } from "./constants";
 @Component({
   components: {
     Clock,
@@ -58,7 +61,7 @@ export default class App extends Vue {
     setTimeout(
       async () =>
         await fetch(`${BaseUrl}api/nudge`, {
-          method: 'POST'
+          method: "POST"
         }),
       1000
     );
@@ -66,7 +69,7 @@ export default class App extends Vue {
   mounted() {
     (async () => {
       await this.eventServer.init((message: eventType<object>) =>
-        this.$store.dispatch('change', message)
+        this.$store.dispatch("change", message)
       );
     })();
   }

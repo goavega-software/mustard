@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import { VueConstructor } from 'vue/types/umd';
-import { BaseUrl } from '../constants';
+import Vue from "vue";
+import { VueConstructor } from "vue/types/umd";
+import { BaseUrl } from "../constants";
 const eventUrl = `${BaseUrl}events/dunno`;
 type VueSSE = VueConstructor<Vue> & {
   SSE: (
@@ -17,11 +17,11 @@ export class EventSink {
   public async init(onMessage: Function) {
     const higherOrderVue: VueSSE = Vue as VueSSE;
     this.server = await higherOrderVue.SSE(eventUrl, {
-      format: 'json',
+      format: "json",
       withCredentials: true
     });
-    this.server.subscribe('', (message: any) => {
-      console.log('received ', message);
+    this.server.subscribe("", (message: any) => {
+      console.log("received ", message);
       onMessage(message);
     });
   }

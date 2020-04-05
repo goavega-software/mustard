@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import VueX from 'vuex';
-import { eventType } from '../eventsink/';
+import Vue from "vue";
+import VueX from "vuex";
+import { eventType } from "../eventsink/";
 Vue.use(VueX);
 export default new VueX.Store({
   state: {
@@ -18,7 +18,7 @@ export default new VueX.Store({
   },
   actions: {
     change({ commit }, payload) {
-      commit('change', payload);
+      commit("change", payload);
     }
   }
 });

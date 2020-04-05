@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 type comparisonModel = {
   newVal?: number;
   oldVal?: number;
@@ -29,7 +29,7 @@ export default class ComparisonWidget extends Vue {
 
   get model(): comparisonModel {
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
+      this.$store.state[this.eventId || "undefined"] || {
         newValue: this.new,
         oldValue: this.old,
         delta: (this.new || 0) - (this.old || 0)
@@ -40,7 +40,7 @@ export default class ComparisonWidget extends Vue {
   get chartOptions() {
     return {
       chart: {
-        type: 'bar',
+        type: "bar",
         height: 350,
         stacked: true,
         toolbar: false
@@ -52,7 +52,7 @@ export default class ComparisonWidget extends Vue {
       },
       stroke: {
         width: 1,
-        colors: ['#fff']
+        colors: ["#fff"]
       },
       xaxis: {
         categories: [],
@@ -64,8 +64,8 @@ export default class ComparisonWidget extends Vue {
         opacity: 1
       },
       legend: {
-        position: 'top',
-        horizontalAlign: 'left',
+        position: "top",
+        horizontalAlign: "left",
         offsetX: 40
       },
       yaxis: {
@@ -77,11 +77,11 @@ export default class ComparisonWidget extends Vue {
   get series() {
     return [
       {
-        name: 'yesterday',
+        name: "yesterday",
         data: [this.model.oldVal || 0]
       },
       {
-        name: 'today',
+        name: "today",
         data: [this.model.newVal || 0]
       }
     ];

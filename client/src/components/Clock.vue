@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 type TimeModel = {
   date: string;
   time: string;
@@ -27,8 +27,8 @@ type TimeModel = {
 @Component
 export default class Clock extends Vue {
   private model: TimeModel = {
-    date: '',
-    time: ''
+    date: "",
+    time: ""
   };
   private clockOneModel?: TimeModel;
   private clockThreeModel?: TimeModel;
@@ -43,8 +43,8 @@ export default class Clock extends Vue {
   }
   get numberTrivia(): { trivia: string } {
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
-        trivia: 'Hello world'
+      this.$store.state[this.eventId || "undefined"] || {
+        trivia: "Hello world"
       }
     );
   }
@@ -60,19 +60,19 @@ export default class Clock extends Vue {
   }
   getModel(now: Date, tz?: string): TimeModel {
     const options = {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
         hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: "numeric",
+        minute: "numeric",
         timeZone: tz ? tz : undefined
       },
-      currentTime = now.toLocaleString('en-US', options),
-      pieces = currentTime.split(','),
+      currentTime = now.toLocaleString("en-US", options),
+      pieces = currentTime.split(","),
       time = pieces.splice(pieces.length - 1, 1)[0],
-      date = pieces.splice(0, pieces.length - 1).join(', ');
+      date = pieces.splice(0, pieces.length - 1).join(", ");
     return { time, date };
   }
   beforeDestroy() {

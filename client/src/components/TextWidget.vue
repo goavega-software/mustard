@@ -1,5 +1,5 @@
 <template>
-  <div class="center blue">
+  <div class="center" v-bind:style="containerStyle">
     <div>
       <h4>{{ model.subtitle }}</h4>
       <h2>{{ model.title }}</h2>
@@ -8,28 +8,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 type TextModel = { title: string; subtitle: string };
 @Component
 export default class TextWidget extends Vue {
   @Prop() private title?: string;
   @Prop() private subtitle?: string;
   @Prop() private eventId?: string;
-
+  @Prop() private background?: string;
   get model(): TextModel {
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
+      this.$store.state[this.eventId || "undefined"] || {
         title: this.title,
         subtitle: this.subtitle
       }
     );
   }
+
+  get containerStyle() {
+    return {
+      background: this.background ? this.background : "#2a9d8f"
+    };
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.blue {
-  background: #2481b7;
-}
-</style>
+<style scoped lang="scss"></style>

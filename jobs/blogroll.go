@@ -25,7 +25,12 @@ func init() {
 		re := regexp.MustCompile(`<[^>]*>`)
 		fp := gofeed.NewParser()
 		feed, _ := fp.ParseURL(blogURL)
-		slicedItems := feed.Items[1:4]
+		totalItems := len(feed.Items)
+		takeItems := totalItems
+		if totalItems > 15 {
+			takeItems = 15
+		}
+		slicedItems := feed.Items[1:takeItems]
 		var (
 			blog  blogData
 			items []blogItem

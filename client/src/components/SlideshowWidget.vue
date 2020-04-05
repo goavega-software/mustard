@@ -1,36 +1,43 @@
 <template>
   <div class="slideshow">
     <transition name="slide-fade" mode="out-in">
-      <div :key="index">
-        <img v-if="item != undefined" :src="item.url" />
+      <div :key="index" class="full">
+        <div class="full" v-bind:style="containerStyle"></div>
       </div>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from "vue-property-decorator";
 type Slide = { url: string };
 type SlideShowModel = { items: Array<Slide> };
 @Component
 export default class SlideshowWidget extends Vue {
   @Prop() eventId?: string;
-  private item?: Slide = { url: '' };
+  private item?: Slide = { url: "https://source.unsplash.com/random" };
   private timerId?: number;
   private index = -1;
-  get model(): SlideShowModel {
+  mounted() {
     if (this.timerId) {
       clearInterval(this.timerId);
     }
-    this.timerId = setInterval(this.cycle, 1000);
+    this.timerId = setInterval(this.cycle, 10000);
+  }
+  get model(): SlideShowModel {
     return (
-      this.$store.state[this.eventId || 'undefined'] || {
+      this.$store.state[this.eventId || "undefined"] || {
         items: []
       }
     );
   }
+  get containerStyle() {
+    return {
+      background: this.item.url ? `url(${this.item.url}) no-repeat` : "#1446a0"
+    };
+  }
   cycle() {
-    console.log('model is', this.model);
+    console.log("model is", this.model);
     if (!this.model || !this.model.items || this.model.items.length === 0) {
       return;
     }
@@ -42,8 +49,8 @@ export default class SlideshowWidget extends Vue {
     if (!item) {
       return;
     }
-    console.log('item is', item);
-    Vue.set(this.item, 'url', item.url);
+    console.log("item is", item);
+    Vue.set(this.item, "url", item.url);
   }
 }
 </script>
@@ -52,10 +59,11 @@ export default class SlideshowWidget extends Vue {
 <style scoped lang="scss">
 .slideshow {
   background: linear-gradient(to right, #f3904f, #3b4371);
-  img {
+  overflow: hidden;
+  .full {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    background-size: cover !important;
   }
 }
 .slide-fade-enter-active {
@@ -66,7 +74,7 @@ export default class SlideshowWidget extends Vue {
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active for <2.1.8 */ {
-  transform: translateX(10px);
+  transform: translateX(5px);
   opacity: 0;
 }
 </style>
