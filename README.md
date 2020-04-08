@@ -63,7 +63,7 @@ Few widgets and jobs are already included in repository - feel free to use/abuse
         <WeatherWidget eventId="weather" />
       </div>
 ```
-* Widgets use VueX for state management. Since all state objects have to be defined in advance, an empty defintion is requred in client/src/store/index.ts for the given event
+* Widgets use VueX for state management. Since all state objects have to be defined in advance, an empty defintion is required in client/src/store/index.ts for the given event
 * eventId prop ties this widget with SSE data
 * widget width and height can be adjusted by setting classes x{1..4} and y{1..4} respectively.
 
@@ -79,9 +79,12 @@ Detailed wiki TBD!
 
 ### FAQ
 Q. Why is it called Mustard?
+
 A. Good question - we like using color names.
+
 Q. Why Go and Vue, and not React and Node or X & Y?
 A. This was primarily used as a weekend project to learn something new. Go and Vue seemed to be good choices to learn over the weekend :).
+
 Q. How is it currently used?
 A. Currently Mustard runs on desk on a repurposed screen from a bricked laptop and raspberry pi.
 
