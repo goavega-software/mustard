@@ -83,9 +83,11 @@ Q. Why is it called Mustard?
 A. Good question - we like using color names.
 
 Q. Why Go and Vue, and not React and Node or X & Y?
+
 A. This was primarily used as a weekend project to learn something new. Go and Vue seemed to be good choices to learn over the weekend :).
 
 Q. How is it currently used?
+
 A. Currently Mustard runs on desk on a repurposed screen from a bricked laptop and raspberry pi.
 
 #### License
