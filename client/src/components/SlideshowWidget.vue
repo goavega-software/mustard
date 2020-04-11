@@ -33,7 +33,10 @@ export default class SlideshowWidget extends Vue {
   }
   get containerStyle() {
     return {
-      background: this.item && this.item.url ? `url(${this.item.url}) no-repeat` : "#1446a0"
+      background:
+        this.item && this.item.url
+          ? `url(${this.item.url}) no-repeat`
+          : "#1446a0"
     };
   }
   cycle() {
@@ -48,7 +51,7 @@ export default class SlideshowWidget extends Vue {
     if (!item) {
       return;
     }
-    this.item = {...item};
+    this.item = { ...item };
   }
 }
 </script>

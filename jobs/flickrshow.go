@@ -12,7 +12,7 @@ type slideshow struct {
 }
 
 func init() {
-	mustardcore.AddJob("@every 1h", func() {
+	mustardcore.AddJob("@every 1d", func() {
 		flickrUser := mustardcore.GetEnvVariables().FlickrUserID
 		var items []slide
 		flickr := mustardcore.Flickr{UserID: flickrUser}
@@ -21,7 +21,7 @@ func init() {
 			items = append(items, slide{URL: item.GetUrl()})
 		}
 		slideshow.Items = items
-		data := mustardcore.EventData{Event: "slideshow", Data: slideshow}
+		data := mustardcore.EventData{Event: "flickrshow", Data: slideshow}
 		mustardcore.SseNotify(data)
 
 	})
