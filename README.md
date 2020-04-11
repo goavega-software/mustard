@@ -51,6 +51,7 @@ Few widgets and jobs are already included in repository - feel free to use/abuse
 * Number - gets the number trivia for today's day
 * comparison - gets today and yesterday's Covid-19 cases
 * FlickrShow - gets images from flickr
+* S3Show - gets images from a S3 bucket filtered by a prefix (aka folder).
 ### Creating new job
 * Use any of the job as reference, move any configuration field to .env. You can read the env var using ``` os.Getenv("VAR") ```
 * The job schedule can be defined in human readble form like "every nm|h|d"
