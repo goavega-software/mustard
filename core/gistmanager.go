@@ -35,8 +35,8 @@ var (
 
 func init() {
 	currentPath, _ = os.Getwd()
-	componentDir = fmt.Sprintf("%sclient/src/components/", currentPath)
-	jobsDir = fmt.Sprintf("%sjobs/", currentPath)
+	componentDir = fmt.Sprintf("%s/client/src/components/", currentPath)
+	jobsDir = fmt.Sprintf("%s/jobs/", currentPath)
 }
 
 // Install installs a gist by moving .Vue files to
@@ -46,7 +46,8 @@ func (gist Gist) Install() {
 		log.Fatal("Invalid gist Id provided")
 		return
 	}
-	resp, err := http.Get("https://api.github.com/gists/4ff6c4ee6c26fa1b5ba7ddff1c52b515")
+	gistURL := fmt.Sprintf("https://api.github.com/gists/%s", gist.ID)
+	resp, err := http.Get(gistURL)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -64,6 +65,7 @@ func (gist Gist) Install() {
 		return
 	}
 	for _, item := range v.Files {
+		log.Println("filename is", item.Filename)
 		item.install()
 	}
 }
@@ -71,6 +73,7 @@ func (gist Gist) Install() {
 func (file GistFile) install() {
 	fileExt := filepath.Ext(file.Filename)
 	var createPath string
+	log.Println(fileExt, componentDir)
 	if fileExt == ".vue" {
 		// vue file
 		createPath = componentDir
