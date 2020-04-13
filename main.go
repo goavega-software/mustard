@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	mustardcore "mustard/core"
@@ -14,7 +15,24 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
+func parseArgs() (bool, string) {
+	gistIDPtr := flag.String("gist", "", "gist id to install")
+	flag.Parse()
+	fmt.Println("gist", *gistIDPtr)
+	return len(*gistIDPtr) > 0, *gistIDPtr
+}
+
+func installGist(gistID string) {
+	gist := mustardcore.Gist{ID: gistID}
+	gist.Install()
+}
+
 func main() {
+	hasArgs, gistID := parseArgs()
+	if hasArgs {
+		installGist(gistID)
+		return
+	}
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowCredentials: true,
