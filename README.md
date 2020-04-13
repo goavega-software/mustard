@@ -68,7 +68,12 @@ Few widgets and jobs are already included in repository - feel free to use/abuse
 * eventId prop ties this widget with SSE data
 * widget width and height can be adjusted by setting classes x{1..4} and y{1..4} respectively.
 
-Detailed wiki TBD!
+## Extending
+Apart from the regular way of cloning and modifying, mustard supports extensions via gists. The gists can be installed by providing the ID of the gist ` $ ./mustard -gist={id} `. Only .vue and .go files are supported in the gist. Sample gists
+
+| widget        | Description  |
+| ------------- | -----:|
+| [Mopidy Client](https://gist.github.com/sn123/dc903fb6d19ad793505fecc1b52536f7)     |A Simple client for [Mopidy](https://mopidy.com/) which displays now playing|
 
 ### TODO
  - Create wiki
@@ -76,7 +81,7 @@ Detailed wiki TBD!
  - Better error handling - currently a job crash causes app to panic
  - Support for multiple dashboards
  - Data persistence
- - Support for widget installation via gists
+
 
 ### FAQ
 Q. Why is it called Mustard?
