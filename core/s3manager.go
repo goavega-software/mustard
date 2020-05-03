@@ -29,7 +29,6 @@ func (s3Images S3Images) Get() []string {
 	// for setting the env key
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(s3Images.Region),
-		// Credentials: credentials.NewStaticCredentials("", "", "")
 	},
 	)
 	bucket := aws.String(s3Images.Bucket)

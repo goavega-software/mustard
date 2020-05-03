@@ -31,6 +31,6 @@ func init() {
 			return
 		}
 		data := mustardcore.EventData{Event: "clockWidget", Data: number{Trivia: string(text)}}
-		mustardcore.SseNotify(data)
+		mustardcore.GetEventsManager().Notify(data)
 	})
 }

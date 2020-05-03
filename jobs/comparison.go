@@ -2,7 +2,6 @@ package jobs
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	mustardcore "mustard/core"
@@ -42,8 +41,7 @@ func init() {
 			oldValue = int(dataInterface[totalItems-2].(map[string]interface{})["confirmed"].(float64))
 		}
 		newValue := int(newData["confirmed"].(float64))
-		fmt.Println("valuees are", newValue, oldValue)
 		eventData := mustardcore.EventData{Event: "comparisonWidget", Data: comparer{OldVal: oldValue, NewVal: newValue}}
-		mustardcore.SseNotify(eventData)
+		mustardcore.GetEventsManager().Notify(eventData)
 	})
 }

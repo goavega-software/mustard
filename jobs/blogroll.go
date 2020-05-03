@@ -43,6 +43,7 @@ func init() {
 		}
 		blog.Items = items
 		data := mustardcore.EventData{Event: "blogRoll", Data: blog}
-		mustardcore.SseNotify(data)
+		
+		mustardcore.GetEventsManager().Notify(data)
 	})
 }

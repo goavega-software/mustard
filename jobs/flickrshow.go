@@ -22,7 +22,7 @@ func init() {
 		}
 		slideshow.Items = items
 		data := mustardcore.EventData{Event: "flickrshow", Data: slideshow}
-		mustardcore.SseNotify(data)
+		mustardcore.GetEventsManager().Notify(data)
 
 	})
 }

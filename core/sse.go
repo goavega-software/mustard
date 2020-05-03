@@ -12,15 +12,23 @@ import (
 
 var server *sse.Server
 
+/*
+EventData holds the data that needs to be sent over sse
+*/
 type EventData struct {
 	Event string      `json:"event"`
 	Data  interface{} `json:"data"`
 }
 
+type EventsManager struct {
+
+}
+
+var eventsManager = EventsManager{}
 /*
-SseInit Initializes the sse server
+Init Initializes the sse server
 */
-func SseInit(e *echo.Echo) {
+func (ev EventsManager) Init(e *echo.Echo) {
 	server = sse.NewServer(nil)
 	e.Any("/events/:channel", func(c echo.Context) error {
 		req := c.Request()
@@ -31,9 +39,9 @@ func SseInit(e *echo.Echo) {
 }
 
 /*
-SseNotify sends SSE with payload
+Notify sends SSE with payload
 */
-func SseNotify(payload EventData) {
+func (e EventsManager) Notify(payload EventData) {
 	if server == nil {
 		return
 	}
@@ -56,10 +64,14 @@ func jsonMarshal(v interface{}, safeEncoding bool) ([]byte, error) {
 	return b, err
 }
 
+func GetEventsManager() EventsManager {
+	return eventsManager
+}
+
 /*
-SseDestroy is supposed to clean up
+Destroy is supposed to clean up
 */
-func SseDestroy() {
+func (e EventsManager) Destroy() {
 	if server == nil {
 		return
 	}

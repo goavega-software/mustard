@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+
 func init() {
 	mustardcore.AddJob("@every 4h", func() {
 		var items []slide
@@ -15,7 +16,6 @@ func init() {
 		}
 		slideshow.Items = items
 		data := mustardcore.EventData{Event: "slideshow", Data: slideshow}
-		mustardcore.SseNotify(data)
-
+		mustardcore.GetEventsManager().Notify(data)
 	})
 }

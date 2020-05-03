@@ -64,7 +64,6 @@ func init() {
 		photos := flickr.Get()
 		weatherData.Image = mustardcore.TakeOne(photos).GetUrl()
 		data := mustardcore.EventData{Event: "weather", Data: weatherData}
-		mustardcore.SseNotify(data)
-
+		mustardcore.GetEventsManager().Notify(data)
 	})
 }

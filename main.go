@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	mustardcore "mustard/core"
+	events "mustard/core/events"
 	_ "mustard/jobs"
 	"net/http"
 	"os"
@@ -42,16 +43,17 @@ func main() {
 	e.Static("/js", "js")
 	e.Static("/css", "css")
 	e.Static("/dashboard", "views")
-
-	mustardcore.SseInit(e)
-	mustardcore.InitJobs()
-
-	defer mustardcore.SseDestroy()
+	eventsManager := mustardcore.GetEventsManager()
+	eventsManager.Init(e)
+	eventListener := events.EventListener{URL: os.Getenv("KAFKA_URL"), Topic: os.Getenv("KAFKA_TOPIC"), GroupID: "mustard"}
+	eventListener.Start()
+	defer eventsManager.Destroy()
 	defer mustardcore.DestroyJobs()
+
 	port := os.Getenv("PORT")
 	e.POST("/api/nudge", func(c echo.Context) error {
 		mustardcore.FireImmediately()
-		return c.HTML(200, "<p>Hello</p>")
+		return c.HTML(200, "Hello world")
 	})
 	if port == "" {
 		port = "8090"
