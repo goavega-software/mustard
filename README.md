@@ -95,6 +95,12 @@ type EventData struct {
 ```
 Kafka topics are great for pushing NRT metrices (Near Real Time) to the dashboard. Kafka topic bound widgets can be used to display Time series graphs or volatile values. Mustard already has built-in support for [ApexCharts](https://apexcharts.com/), which can be used for displaying charts.
 
+### Docker
+```sh
+$ docker pull goavega/mustard:latest
+$ docker run -p <local>:80 --env-file ./.env goavega/mustard
+```
+
 ### TODO
  - Create wiki
  - Drag and drop support
