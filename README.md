@@ -95,6 +95,23 @@ type EventData struct {
 ```
 Kafka topics are great for pushing NRT metrices (Near Real Time) to the dashboard. Kafka topic bound widgets can be used to display Time series graphs or volatile values. Mustard already has built-in support for [ApexCharts](https://apexcharts.com/), which can be used for displaying charts.
 
+### Docker compose
+There's a docker compose file which exposes kafka listener both internally and externally. On windows, since traffic cannot be routed to linux containers, the kafka listener is exposed as host.docker.internal on the host. The docker-compose for windows is docker-compose-win.yml.
+
+```shell
+$ docker-compose -f ./docker-compose.yml up -d
+```
+Please make sure that mustard's env file has the topic you need to listen to (KAFKA_TOPIC)
+
+The docker compose file uses https://github.com/wurstmeister/kafka-docker/, please refer to the documentation there to troubleshoot connectivity issues.
+
+On windows, this is how it would potentially work:
+
+1. Create the topic:
+```.\kafka-topics.bat --bootstrap-server host.docker.internal:9094 --topic test --create```
+2. Set the topic name in .env
+3. Produce a message:
+```.\kafka-console-producer.bat --bootstrap-server host.docker.internal:9094 --topic test```
 ### TODO
  - Create wiki
  - Drag and drop support
