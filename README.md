@@ -112,6 +112,13 @@ On windows, this is how it would potentially work:
 2. Set the topic name in .env
 3. Produce a message:
 ```.\kafka-console-producer.bat --bootstrap-server host.docker.internal:9094 --topic test```
+
+### Docker
+```sh
+$ docker pull goavega/mustard:latest
+$ docker run -p <local>:80 --env-file ./.env goavega/mustard
+```
+
 ### TODO
  - Create wiki
  - Drag and drop support
