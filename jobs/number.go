@@ -21,13 +21,13 @@ func init() {
 		now := time.Now()
 		resp, err := http.Get(fmt.Sprintf(numberURL, now.Day()))
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		defer resp.Body.Close()
 		text, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		data := mustardcore.EventData{Event: "clockWidget", Data: number{Trivia: string(text)}}
