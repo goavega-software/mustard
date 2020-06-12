@@ -41,19 +41,19 @@ func init() {
 		apiKey := mustardcore.GetEnvVariables().OpenWeatherKey
 		resp, err := http.Get(fmt.Sprintf(weatherAPIURL, placeID, apiKey))
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		defer resp.Body.Close()
 		text, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		weather := weatherData{}
 		err = json.Unmarshal(text, &weather)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		weatherData := outputData{Max: weather.Main.TempMax, Min: weather.Main.TempMin, Temp: weather.Main.Temp}

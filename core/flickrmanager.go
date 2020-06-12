@@ -52,13 +52,13 @@ func (f Flickr) Get() []ApiPhotoResponse {
 	log.Println("flickr query", query)
 	resp, err := http.Get(query)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return nil
 	}
 	defer resp.Body.Close()
 	text, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return nil
 	}
 	apiResponse := apiSearchResponse{}

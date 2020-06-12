@@ -21,13 +21,13 @@ func init() {
 	mustardcore.AddJob("@every 6h", func() {
 		resp, err := http.Get(dataURL)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		defer resp.Body.Close()
 		text, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			return
 		}
 		var v interface{}
