@@ -4,6 +4,6 @@
 # to native line endings on checkout.
 *.go text
 *.vue text
-.yml text
-.ts text
-.js text
+*.yml text
+*.ts text
+*.js text
