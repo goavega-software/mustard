@@ -17,7 +17,7 @@ type WeatherModel = {
   image?: string;
 };
 @Component
-export default class TextWidget extends Vue {
+export default class WeatherWidget extends Vue {
   @Prop() private eventId?: string;
   get model(): WeatherModel {
     return (
