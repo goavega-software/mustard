@@ -90,6 +90,7 @@ Apart from the regular way of cloning and modifying, mustard supports extensions
 | ------------- | -----|
 | [Mopidy Client](https://gist.github.com/sn123/dc903fb6d19ad793505fecc1b52536f7)     |A Simple client for [Mopidy](https://mopidy.com/) which displays now playing|
 | [Animated Number](https://gist.github.com/sn123/ad1b185cdd76abab4d0bd5eb4c8c4b22)     |Animates a number and displays up/down arrow|
+| [YouTube Video](https://gist.github.com/sn123/a0c0fc7ccaeb5171cbf97ab087af2d05)     |Plays a YouTube in loop (muted)|
 
 ### Kafka Support
 * From v0.2, Mustard starts a kafka listener by connecting to broker URL specified in .env and subscribing to topic in .env. Multiple Broker URLs in .env should be separated by comma. Mustard kafka listener is primarily a proxy between the widget and the kafka topic, it does not add any intelligence on top of the message received and just forwards it over the SSE. Message published on kafka topic should have same JSON structure as expected by SSE:
