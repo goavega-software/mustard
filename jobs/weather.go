@@ -36,7 +36,7 @@ type outputData struct {
 var weatherAPIURL = "http://api.openweathermap.org/data/2.5/weather?id=%d&appid=%s&units=metric"
 
 func init() {
-	mustardcore.AddJob("@every 1h", func() {
+	mustardcore.GetFactory().Advertise("weather", func() {
 		placeID := mustardcore.GetEnvVariables().OpenWeatherPlaceID
 		apiKey := mustardcore.GetEnvVariables().OpenWeatherKey
 		resp, err := http.Get(fmt.Sprintf(weatherAPIURL, placeID, apiKey))

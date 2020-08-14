@@ -17,7 +17,7 @@ type number struct {
 var numberURL = "http://numbersapi.com/%d"
 
 func init() {
-	mustardcore.AddJob("@every 2h", func() {
+	mustardcore.GetFactory().Advertise("number", func() {
 		now := time.Now()
 		resp, err := http.Get(fmt.Sprintf(numberURL, now.Day()))
 		if err != nil {

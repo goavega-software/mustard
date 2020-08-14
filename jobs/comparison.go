@@ -18,7 +18,7 @@ var dataURL = "https://pomber.github.io/covid19/timeseries.json"
 var country = "India"
 
 func init() {
-	mustardcore.AddJob("@every 6h", func() {
+	mustardcore.GetFactory().Advertise("comparison", func() {
 		resp, err := http.Get(dataURL)
 		if err != nil {
 			log.Println(err)

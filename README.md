@@ -50,6 +50,12 @@ Few widgets and jobs are already included in repository - feel free to use/abuse
 * Weather widget - displays weather from OpenWeather and gets the backrground image from flickr for the weather condition
 * List widget - cycles through a list of items (title, image and description) on schedule
 #### Jobs
+Jobs schedule is set using env variable ```JOB_SCHEDULE```. The variable holds an JSON array in below form:
+```
+[{"name": "name-of-job", "schedule": "schedule-of-job"}, {"name": "weather", "schedule": "@every 1h"}]
+```
+This allows all jobs to have their job schedule configurable using env. Any job which is not present in JOB_SCHEDULE is disabled. (since 0.3)
+
 * Blogroll - gets RSS feed from a site and converts the URL into a QR Code.
 * Weather - gets the current weather from OpenWeather
 * Number - gets the number trivia for today's day

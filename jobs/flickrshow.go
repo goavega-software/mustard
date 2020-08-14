@@ -12,7 +12,7 @@ type slideshow struct {
 }
 
 func init() {
-	mustardcore.AddJob("@every 1d", func() {
+	mustardcore.GetFactory().Advertise("flickrshow", func() {
 		flickrUser := mustardcore.GetEnvVariables().FlickrUserID
 		var items []slide
 		flickr := mustardcore.Flickr{UserID: flickrUser}
