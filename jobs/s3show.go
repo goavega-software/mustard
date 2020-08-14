@@ -5,9 +5,8 @@ import (
 	"os"
 )
 
-
 func init() {
-	mustardcore.AddJob("@every 4h", func() {
+	mustardcore.GetFactory().Advertise("s3show", func() {
 		var items []slide
 		s3Images := mustardcore.S3Images{Bucket: os.Getenv("AWS_S3_BUCKET"), Region: os.Getenv("AWS_S3_REGION"), Prefix: os.Getenv("")}
 		slideshow := slideshow{}

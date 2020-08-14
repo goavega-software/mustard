@@ -47,6 +47,8 @@ func main() {
 	eventsManager.Init(e)
 	eventListener := events.EventListener{URL: os.Getenv("KAFKA_URL"), Topic: os.Getenv("KAFKA_TOPIC"), GroupID: "mustard"}
 	eventListener.Start()
+	mustardcore.GetFactory().Process(os.Getenv("JOB_SCHEDULE"))
+
 	defer eventsManager.Destroy()
 	defer mustardcore.DestroyJobs()
 

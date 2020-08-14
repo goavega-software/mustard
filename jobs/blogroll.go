@@ -21,7 +21,7 @@ type blogData struct {
 var blogURL = "https://www.goavega.com/feed"
 
 func init() {
-	mustardcore.AddJob("@every 1h", func() {
+	mustardcore.GetFactory().Advertise("blogroll", func() {
 		re := regexp.MustCompile(`<[^>]*>`)
 		fp := gofeed.NewParser()
 		feed, _ := fp.ParseURL(blogURL)
@@ -43,7 +43,7 @@ func init() {
 		}
 		blog.Items = items
 		data := mustardcore.EventData{Event: "blogRoll", Data: blog}
-		
+
 		mustardcore.GetEventsManager().Notify(data)
 	})
 }
