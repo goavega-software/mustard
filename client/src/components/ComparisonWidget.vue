@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type comparisonModel = {
   newVal?: number;
   oldVal?: number;
@@ -29,9 +30,9 @@ export default class ComparisonWidget extends Vue {
 
   get model(): comparisonModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
-        newValue: this.new,
-        oldValue: this.old,
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
+        newVal: this.new,
+        oldVal: this.old,
         delta: (this.new || 0) - (this.old || 0)
       }
     );
