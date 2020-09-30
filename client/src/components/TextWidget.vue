@@ -20,8 +20,8 @@ export default class TextWidget extends Vue {
   get model(): TextModel {
     return (
       getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
-        title: this.title!,
-        subtitle: this.subtitle!
+        title: this.title || "",
+        subtitle: this.subtitle || ""
       }
     );
   }
