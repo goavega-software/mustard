@@ -1,35 +1,8 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="column y2">
-        <WeatherWidget eventId="weather" />
-      </div>
-      <div class="column y2">
-        <Clock
-          clockOneTz="America/Los_Angeles"
-          clockThreeTz="America/New_York"
-          eventId="clockWidget"
-        />
-      </div>
-      <div class="column y1">
-        <ListWidget eventId="blogRoll" />
-      </div>
-      <div class="column y1">
-        <ComparisonWidget
-          eventId="comparisonWidget"
-          threshold="0.25"
-          new="0"
-          old="0"
-        />
-      </div>
-      <div class="column y1">
-        <SlideshowWidget eventId="slideshow" />
-      </div>
-      <div class="column">
-        <TextWidget title="Mustard" subtitle="hello" background="#ffdb58" />
-      </div>
-      <div class="column">
-        <TextWidget title="build?" subtitle="what will you" />
+      <div v-for="(l, index) in layout" v-bind:key="index" v-bind:class="getClass(index)">
+        <div :is="l.component" v-bind="getProps(index)" />
       </div>
     </div>
   </div>
@@ -45,6 +18,49 @@ import WeatherWidget from "./components/WeatherWidget.vue";
 import SlideshowWidget from "./components/SlideshowWidget.vue";
 import { EventSink, eventType } from "./eventsink";
 import { BaseUrl } from "./constants";
+type layoutType = {
+  component: string;
+  class: string | string[];
+  props: Record<string, unknown>;
+  state?: Record<string, unknown>;
+};
+interface Classes {
+  column: boolean;
+  [key: string]: boolean;
+}
+const getLayout = async () => {
+  return new Promise<Array<layoutType>>(resolve => {
+    resolve([
+      {
+        component: "WeatherWidget",
+        class: "y2",
+        props: { eventId: "weather" },
+        state: { weather: {} }
+      },
+      {
+        component: "TextWidget",
+        class: "x2",
+        props: { title: "Mustard", subtitle: "Hello", background: "#ffdb58" }
+      },
+      {
+        component: "Clock",
+        class: "y2",
+        props: {
+          eventId: "clockWidget",
+          clockOneTz: "America/Los_Angeles",
+          clockThreeTz: "America/New_York"
+        },
+        state: { clockWidget: {} }
+      },
+      {
+        component: "SlideshowWidget",
+        class: ["y1", "x2"],
+        props: { eventId: "slideshow" },
+        state: { slideshow: {} }
+      }
+    ]);
+  });
+};
 @Component({
   components: {
     Clock,
@@ -57,6 +73,8 @@ import { BaseUrl } from "./constants";
 })
 export default class App extends Vue {
   private eventServer = new EventSink();
+  private layout: Array<layoutType> = [];
+
   created() {
     setTimeout(
       async () =>
@@ -68,10 +86,39 @@ export default class App extends Vue {
   }
   mounted() {
     (async () => {
+      // get the layout, for now we get it from local
+      this.layout = await getLayout();
+      // set the Vuex state modules
+      this.layout.forEach(layoutItem => {
+        if (!layoutItem.state) {
+          return;
+        }
+        const moduleState = {
+          state: () => ({ data: {} })
+        };
+        const stateKey = Object.keys(layoutItem.state)[0];
+        console.log("state key is ", stateKey);
+        this.$store.registerModule(stateKey, moduleState);
+      });
+    })();
+    (async () => {
       await this.eventServer.init((message: eventType<object>) =>
         this.$store.dispatch("change", message)
       );
     })();
+  }
+  getClass(index: number): { column: boolean } & Record<string, boolean> {
+    const classes: Classes = {
+      column: true
+    };
+    const classNames = Array.isArray(this.layout[index].class) ? this.layout[index].class: [this.layout[index].class];
+    (classNames as string[]).forEach(cls => {
+      classes[cls] = true;
+      });
+      return classes;
+  }
+  getProps(index: number): Record<string, unknown> {
+    return this.layout[index].props;
   }
   beforeDestroy() {
     this.eventServer.destory();

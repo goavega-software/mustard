@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type WeatherModel = {
   temp: number;
   desc: string;
@@ -21,7 +22,7 @@ export default class WeatherWidget extends Vue {
   @Prop() private eventId?: string;
   get model(): WeatherModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
         temp: 0,
         desc: "--"
       }

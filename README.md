@@ -70,6 +70,24 @@ This allows all jobs to have their job schedule configurable using env. Any job 
 data := mustardcore.EventData{Event: "clockWidget",  Data: number{Trivia: string(text)}}
 mustardcore.GetEventsManager().Notify(data)
 ```
+
+### Dashboard layout
+Instead of hard-wiring the layout in vue file, the layout can be retrieved from a backend API. The API should return layout JSON data array in this form:
+```typescript
+type layoutType = {
+  component: string;
+  class: string | string[];
+  props: Record<string, unknown>;
+  state?: Record<string, unknown>;
+};
+```
+The properties are:
+
+* component - The name of the component to render for e.g. ```WeatherWidget```
+* class string | [] - classes to apply to this component. ```column``` is always added.
+* props - any props to pass to this widget, generally if it is a vuex backed component, eventId should be passed for e.g. ```{ eventId: "weather" }```
+* state - the state module definition, should be the default state for this widget in the form of ```state: { weather: {} }```. The name of the key (weather) is used as name of the module (no namespacing). 
+
 ### Creating new widget
 * Make a copy of TextWidget.vue and use that as reference
 * Import the widget in App.vue and add it in the grid:
@@ -78,8 +96,20 @@ mustardcore.GetEventsManager().Notify(data)
         <WeatherWidget eventId="weather" />
       </div>
 ```
-* Widgets use VueX for state management. Since all state objects have to be defined in advance, an empty defintion is required in client/src/store/index.ts for the given event.
+* Widgets use VueX for state management, each widget defines their own module for state. The modules are registered dynamically instead of having to add empty definitions. 
 * eventId prop ties this widget with SSE data
+* Retrieving model/SSE from state is passed as module-name and 'data'. It can be easily retrieved in widget by making use of ```getStoreItem()``` helper function in store. Something like:
+```typescript
+import { getStoreItem, State } from "../store";
+// ....
+  get numberTrivia(): { trivia: string } {
+    return (
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
+        trivia: "Hello world"
+      }
+    );
+  }
+```
 * widget width and height can be adjusted by setting classes x{1..4} and y{1..4} respectively.
 * Starting v0.2, a shared animated number widget component is added. This component can be used to animate a changing number value. The widget is same as one provided in Vue state animation [example](https://vuejs.org/v2/guide/transitioning-state.html).
 

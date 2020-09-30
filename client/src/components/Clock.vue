@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type TimeModel = {
   date: string;
   time: string;
@@ -30,8 +31,14 @@ export default class Clock extends Vue {
     date: "",
     time: ""
   };
-  private clockOneModel?: TimeModel;
-  private clockThreeModel?: TimeModel;
+  private clockOneModel?: TimeModel= {
+    date: "",
+    time: ""
+  };
+  private clockThreeModel?: TimeModel= {
+    date: "",
+    time: ""
+  };
   private timerID?: number;
   @Prop() private clockOneTz?: string;
   @Prop() private clockThreeTz?: string;
@@ -43,7 +50,7 @@ export default class Clock extends Vue {
   }
   get numberTrivia(): { trivia: string } {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
         trivia: "Hello world"
       }
     );

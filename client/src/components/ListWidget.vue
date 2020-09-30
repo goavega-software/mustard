@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type listItem = { title: string; description: string; url: string };
 @Component({
   filters: {
@@ -36,7 +37,7 @@ export default class ListWidget extends Vue {
     }
     this.timerId = setInterval(this.cycle, 10000);
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
         title: "Hello",
         items: []
       }

@@ -2,19 +2,28 @@ import Vue from "vue";
 import VueX from "vuex";
 import { eventType } from "../eventsink/";
 Vue.use(VueX);
+interface State {
+  [key: string]: {
+    data: Record<string, unknown>;
+  };
+}
+const getStoreItem = <T>(state: State, stateName?: string): T | undefined => {
+  if (!stateName) {
+    return;
+  }
+  const module = state[stateName];
+  if (module) {
+    console.log('returning state data for', stateName);
+    return module.data as T;
+  }
+};
 export default new VueX.Store({
-  state: {
-    textWidget: {},
-    clockWidget: {},
-    blogRoll: {},
-    weather: {},
-    comparisonWidget: {},
-    slideshow: {}
-  },
   mutations: {
-    change(state, payload: eventType<object>) {
-      // @ts-ignore
-      state[payload.event] = payload.data;
+    change(state: State, payload: eventType<Record<string, unknown>>) {
+      if (!state[payload.event]) {
+        return;
+      }
+      state[payload.event]["data"] = payload.data;
     }
   },
   actions: {
@@ -23,3 +32,5 @@ export default new VueX.Store({
     }
   }
 });
+
+export { getStoreItem, State };
