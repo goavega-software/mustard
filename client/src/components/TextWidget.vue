@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type TextModel = { title: string; subtitle: string };
 @Component
 export default class TextWidget extends Vue {
@@ -18,9 +19,9 @@ export default class TextWidget extends Vue {
   @Prop() private background?: string;
   get model(): TextModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
-        title: this.title,
-        subtitle: this.subtitle
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
+        title: this.title!,
+        subtitle: this.subtitle!
       }
     );
   }

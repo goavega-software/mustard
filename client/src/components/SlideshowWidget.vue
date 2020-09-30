@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { getStoreItem, State } from "../store";
 type Slide = { url: string };
 type SlideShowModel = { items: Array<Slide> };
 @Component
@@ -26,7 +27,7 @@ export default class SlideshowWidget extends Vue {
   }
   get model(): SlideShowModel {
     return (
-      this.$store.state[this.eventId || "undefined"] || {
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
         items: []
       }
     );
