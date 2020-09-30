@@ -31,11 +31,11 @@ export default class Clock extends Vue {
     date: "",
     time: ""
   };
-  private clockOneModel?: TimeModel= {
+  private clockOneModel?: TimeModel = {
     date: "",
     time: ""
   };
-  private clockThreeModel?: TimeModel= {
+  private clockThreeModel?: TimeModel = {
     date: "",
     time: ""
   };

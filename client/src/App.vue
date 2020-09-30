@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div class="container">
-      <div v-for="(l, index) in layout" v-bind:key="index" v-bind:class="getClass(index)">
+      <div
+        v-for="(l, index) in layout"
+        v-bind:key="index"
+        v-bind:class="getClass(index)"
+      >
         <div :is="l.component" v-bind="getProps(index)" />
       </div>
     </div>
@@ -97,7 +101,6 @@ export default class App extends Vue {
           state: () => ({ data: {} })
         };
         const stateKey = Object.keys(layoutItem.state)[0];
-        console.log("state key is ", stateKey);
         this.$store.registerModule(stateKey, moduleState);
       });
     })();
@@ -111,11 +114,13 @@ export default class App extends Vue {
     const classes: Classes = {
       column: true
     };
-    const classNames = Array.isArray(this.layout[index].class) ? this.layout[index].class: [this.layout[index].class];
+    const classNames = Array.isArray(this.layout[index].class)
+      ? this.layout[index].class
+      : [this.layout[index].class];
     (classNames as string[]).forEach(cls => {
       classes[cls] = true;
-      });
-      return classes;
+    });
+    return classes;
   }
   getProps(index: number): Record<string, unknown> {
     return this.layout[index].props;

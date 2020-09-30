@@ -13,7 +13,6 @@ const getStoreItem = <T>(state: State, stateName?: string): T | undefined => {
   }
   const module = state[stateName];
   if (module) {
-    console.log('returning state data for', stateName);
     return module.data as T;
   }
 };
