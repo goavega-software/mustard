@@ -21,10 +21,10 @@ type EventData struct {
 }
 
 type EventsManager struct {
-
 }
 
 var eventsManager = EventsManager{}
+
 /*
 Init Initializes the sse server
 */
@@ -41,7 +41,7 @@ func (ev EventsManager) Init(e *echo.Echo) {
 /*
 Notify sends SSE with payload
 */
-func (e EventsManager) Notify(payload EventData) {
+func (ev EventsManager) Notify(payload EventData) {
 	if server == nil {
 		return
 	}
@@ -71,7 +71,7 @@ func GetEventsManager() EventsManager {
 /*
 Destroy is supposed to clean up
 */
-func (e EventsManager) Destroy() {
+func (ev EventsManager) Destroy() {
 	if server == nil {
 		return
 	}
