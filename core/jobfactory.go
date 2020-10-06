@@ -29,6 +29,7 @@ func (jf JobFactory) Process(schedule string) {
 			AddJob(item.Schedule, value)
 		}
 	}
+	InitJobs()
 }
 
 /*
