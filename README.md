@@ -72,7 +72,7 @@ mustardcore.GetEventsManager().Notify(data)
 ```
 
 ### Dashboard layout
-Instead of hard-wiring the layout in vue file, the layout can be retrieved from a backend API. The API should return layout JSON data array in this form:
+Instead of hard-wiring the layout in vue file, the layout is retrieved from ```layout``` API. The API should return layout JSON data array in this form:
 ```typescript
 type layoutType = {
   component: string;
@@ -87,6 +87,8 @@ The properties are:
 * class string | [] - classes to apply to this component. ```column``` is always added.
 * props - any props to pass to this widget, generally if it is a vuex backed component, eventId should be passed for e.g. ```{ eventId: "weather" }```
 * state - the state module definition, should be the default state for this widget in the form of ```state: { weather: {} }```. The name of the key (weather) is used as name of the module (no namespacing). 
+
+The view passes the current pathname fragment to this API thus allowing having multiple dashboards. The current implementation of API gets the layout from ```config.json``` file stored in /config folder.
 
 ### Creating new widget
 * Make a copy of TextWidget.vue and use that as reference
