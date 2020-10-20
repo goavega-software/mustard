@@ -33,37 +33,16 @@ interface Classes {
   [key: string]: boolean;
 }
 const getLayout = async () => {
-  return new Promise<Array<layoutType>>(resolve => {
-    resolve([
-      {
-        component: "WeatherWidget",
-        class: "y2",
-        props: { eventId: "weather" },
-        state: { weather: {} }
-      },
-      {
-        component: "TextWidget",
-        class: "x2",
-        props: { title: "Mustard", subtitle: "Hello", background: "#ffdb58" }
-      },
-      {
-        component: "Clock",
-        class: "y2",
-        props: {
-          eventId: "clockWidget",
-          clockOneTz: "America/Los_Angeles",
-          clockThreeTz: "America/New_York"
-        },
-        state: { clockWidget: {} }
-      },
-      {
-        component: "SlideshowWidget",
-        class: ["y1", "x2"],
-        props: { eventId: "slideshow" },
-        state: { slideshow: {} }
-      }
-    ]);
+  const url = window.location.pathname;
+  const path = url.substring(url.lastIndexOf("/") +1);
+  const response = await fetch(`${BaseUrl}api/layout`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({ path })
   });
+  return response.json() as Promise<layoutType[]>;
 };
 @Component({
   components: {

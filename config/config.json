@@ -1,0 +1,56 @@
+{
+    "dashboards": [{
+            "id": "goavega",
+            "widgets": [{
+                    "component": "WeatherWidget",
+                    "class": ["y2"],
+                    "props": {
+                        "eventId": "weather"
+                    },
+                    "state": {
+                        "weather": {}
+                    }
+                },
+                {
+                    "component": "TextWidget",
+                    "class": ["x2"],
+                    "props": {
+                        "title": "Mustard",
+                        "subtitle": "Hello",
+                        "background": "#ffdb58"
+                    }
+                },
+                {
+                    "component": "Clock",
+                    "class": ["y2"],
+                    "props": {
+                        "eventId": "clockWidget",
+                        "clockOneTz": "America/Los_Angeles",
+                        "clockThreeTz": "America/New_York"
+                    },
+                    "state": {
+                        "clockWidget": {}
+                    }
+                },
+                {
+                    "component": "SlideshowWidget",
+                    "class": ["y1", "x2"],
+                    "props": {
+                        "eventId": "slideshow"
+                    },
+                    "state": {
+                        "slideshow": {}
+                    }
+                }
+            ]
+        }
+
+    ],
+    "jobs": [{
+        "name": "s3show",
+        "schedule": "@every 1d"
+    }, {
+        "name": "weather",
+        "schedule": "@every 1h"
+    }]
+}

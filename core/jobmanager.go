@@ -46,5 +46,6 @@ func AddJob(interval string, f func()) {
 DestroyJobs closes the job server
 */
 func DestroyJobs() {
+	jobs = nil
 	jobWrapper.Stop()
 }
