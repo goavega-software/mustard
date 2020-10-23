@@ -1,6 +1,7 @@
 package main
 
 import (
+	b64 "encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -35,7 +36,8 @@ type dashboard struct {
 }
 
 type configuration struct {
-	Dashboards []dashboard `json:"dashboards"`
+	Dashboards []dashboard            `json:"dashboards"`
+	Jobs       []mustardcore.Schedule `json:"jobs"`
 }
 
 func parseArgs() (bool, string) {
@@ -83,18 +85,18 @@ func main() {
 	eventsManager.Init(e)
 	eventListener := events.EventListener{URL: os.Getenv("KAFKA_URL"), Topic: os.Getenv("KAFKA_TOPIC"), GroupID: "mustard"}
 	eventListener.Start()
-	mustardcore.GetFactory().Process(os.Getenv("JOB_SCHEDULE"))
 	// read config to get widgets
 	config := readConfig()
 	var result configuration
 	json.Unmarshal([]byte(config), &result)
+	mustardcore.GetFactory().Process(result.Jobs)
 
 	defer eventsManager.Destroy()
 	defer mustardcore.DestroyJobs()
 
 	e.POST("/api/nudge", func(c echo.Context) error {
 		mustardcore.FireImmediately()
-		return c.HTML(http.StatusOK, "Hello mustard")
+		return c.String(http.StatusOK, "Hello mustard")
 	})
 
 	e.POST("/api/layout", func(c echo.Context) (err error) {
@@ -102,13 +104,26 @@ func main() {
 		if err = c.Bind(request); err != nil {
 			return
 		}
-		log.Println(request.Path)
 		for _, f := range result.Dashboards {
 			if f.Id == request.Path {
 				return c.JSON(http.StatusOK, result.Dashboards[0].Widgets)
 			}
 		}
 		return
+	})
+
+	e.POST("/api/webhook", func(c echo.Context) (err error) {
+		apiKey := os.Getenv("API_KEY")
+		headerKey := c.Request().Header.Get("X_API_KEY")
+		if apiKey == "" || headerKey != b64.StdEncoding.EncodeToString([]byte(apiKey)) {
+			return c.String(http.StatusUnauthorized, "Invalid key")
+		}
+		eventMessage := new(mustardcore.EventData)
+		if err = c.Bind(eventMessage); err != nil || eventMessage.Data == nil {
+			return c.String(http.StatusUnprocessableEntity, "Invalid request body")
+		}
+		mustardcore.GetEventsManager().Notify(*eventMessage)
+		return c.String(http.StatusAccepted, "Ok")
 	})
 	port := os.Getenv("PORT")
 	if port == "" {

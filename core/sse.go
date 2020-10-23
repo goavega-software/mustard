@@ -69,6 +69,13 @@ func GetEventsManager() EventsManager {
 }
 
 /*
+AnyClientConnected returns true if any SSE client is  connected
+*/
+func (ev EventsManager) AnyClientConnected() bool {
+	return server.ClientCount() > 0
+}
+
+/*
 Destroy is supposed to clean up
 */
 func (ev EventsManager) Destroy() {
