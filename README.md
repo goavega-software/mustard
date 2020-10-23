@@ -50,11 +50,11 @@ Few widgets and jobs are already included in repository - feel free to use/abuse
 * Weather widget - displays weather from OpenWeather and gets the backrground image from flickr for the weather condition
 * List widget - cycles through a list of items (title, image and description) on schedule
 #### Jobs
-Jobs schedule is set using env variable ```JOB_SCHEDULE```. The variable holds an JSON array in below form:
+Jobs schedule is set in ```config.json``` file in /config folder.:
+```json
+{"jobs": [{"name": "name-of-job", "schedule": "schedule-of-job"}, {"name": "weather", "schedule": "@every 1h"}]}
 ```
-[{"name": "name-of-job", "schedule": "schedule-of-job"}, {"name": "weather", "schedule": "@every 1h"}]
-```
-This allows all jobs to have their job schedule configurable using env. Any job which is not present in JOB_SCHEDULE is disabled. (since 0.3)
+This allows all jobs to have their job schedule configurable. Any job which is not present in config is disabled. (since 0.3)
 
 * Blogroll - gets RSS feed from a site and converts the URL into a QR Code.
 * Weather - gets the current weather from OpenWeather
@@ -70,7 +70,15 @@ This allows all jobs to have their job schedule configurable using env. Any job 
 data := mustardcore.EventData{Event: "clockWidget",  Data: number{Trivia: string(text)}}
 mustardcore.GetEventsManager().Notify(data)
 ```
+### Pushing Data to Widgets
+Mustard supports POST data to ```/api/webhook``` as a passthrough, the post body should be of JSON form ```{"event": "string", "data": object }```. This requires passing the ```API_KEY``` defined in env as base64 encoded value as ```X_API_KEY``` header. 
 
+```sh
+$ curl --location --request POST '<mustard-url>/api/webhook' \
+--header 'Content-Type: application/json' \
+--header 'X_API_KEY: <base64encoded_api_key>' \
+--data-raw '{"event": "slideshow", "data": ...}'
+```
 ### Dashboard layout
 Instead of hard-wiring the layout in vue file, the layout is retrieved from ```layout``` API. The API should return layout JSON data array in this form:
 ```typescript
@@ -161,8 +169,6 @@ $ docker run -p <local>:80 --env-file ./.env goavega/mustard
 ### TODO
  - Create wiki
  - Drag and drop support
- - Better error handling - currently a job crash causes app to panic
- - Support for multiple dashboards
  - Data persistence
  - Shared Chart components
 

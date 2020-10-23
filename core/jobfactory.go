@@ -1,7 +1,6 @@
 package core
 
 import (
-	"encoding/json"
 	"log"
 )
 
@@ -19,9 +18,7 @@ var advertisedJobs map[string]func() = make(map[string]func())
 /*
 Process parses the json and only schedules enabled jobs
 */
-func (jf JobFactory) Process(schedule string) {
-	schedules := make([]Schedule, 0)
-	json.Unmarshal([]byte(schedule), &schedules)
+func (jf JobFactory) Process(schedules []Schedule) {
 	for _, item := range schedules {
 		value, ok := advertisedJobs[item.Name]
 		if ok {
