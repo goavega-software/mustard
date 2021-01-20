@@ -3,6 +3,9 @@ Mustard is an awesome dashboard written in Go, TypeScript and VueJS. Mustard use
 
 ![screenshot](https://github.com/goavega-software/mustard/raw/master/client/public/screenshot.png)
 
+## Demo
+A Working demo can be found here (built for HD resolutions) - [MTA Dashboard](http://cis.goave.ga/dashboard/420n). This uses [MTA real time feeds APIs](https://api.mta.info/?#/landing) to display the train information at a particular station. The dashboard displays ETA of Northbound trains (Bronx) at Bowling Green station and the next stops of the train closest to the station. If you know the station code of another station you can update the 420n with that particular code in the above url. For example, changing 420n to [420s](http://cis.goave.ga/dashboard/420s) will show Soutbound trains information at Bowling Green. Beyond the MTA train information, the dashboard also uses YouTube embed widget, weather widget and MTA's lost+found data.
+
 ## Anatomy
 Mustard has 4 components:
 1. UI widgets - written in VueJS and TypeScript
