@@ -9,7 +9,7 @@
         "prod": "vue-cli-service build --prod && cp -r dist/js/ ../ && cp -r dist/css/ .. && cp dist/index.html ../views/index.html"
     },
     "dependencies": {
-        "apexcharts": "3.17.1",
+        "apexcharts": "3.24.0",
         "core-js": "^3.6.4",
         "vue": "^2.6.11",
         "vue-apexcharts": "~1.5.2",
