@@ -34,7 +34,7 @@ interface Classes {
 }
 const getLayout = async () => {
   const url = window.location.pathname;
-  const path = url.substring(url.lastIndexOf("/") +1);
+  const path = url.substring(url.lastIndexOf("/") + 1);
   const response = await fetch(`${BaseUrl}api/layout`, {
     method: "POST",
     headers: {

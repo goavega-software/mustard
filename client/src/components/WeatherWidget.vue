@@ -1,7 +1,7 @@
 <template>
   <div class="center yale" v-bind:style="containerStyle">
     <div>
-      <img :src="model.icon" v-if="model.icon" alt="&" />
+      <img :src="model.icon" v-if="model.icon" alt="-" />
       <h4>{{ model.desc }}</h4>
       <h2>{{ model.temp }} &#176;</h2>
     </div>
@@ -22,9 +22,9 @@ export default class WeatherWidget extends Vue {
   @Prop() private eventId?: string;
   get model(): WeatherModel {
     return (
-      getStoreItem(this.$store.state as unknown as State, this.eventId) || {
+      getStoreItem((this.$store.state as unknown) as State, this.eventId) || {
         temp: 0,
-        desc: "--",
+        desc: "--"
       }
     );
   }
@@ -33,7 +33,7 @@ export default class WeatherWidget extends Vue {
     return {
       background: this.model.image
         ? `url(${this.model.image}) no-repeat`
-        : "#1446a0",
+        : "#1446a0"
     };
   }
 }
