@@ -1,7 +1,7 @@
 <template>
   <div class="center yale" v-bind:style="containerStyle">
     <div>
-      <img :src="model.icon" v-if="model.icon" />
+      <img :src="model.icon" v-if="model.icon" alt="&"/>
       <h4>{{ model.desc }}</h4>
       <h2>{{ model.temp }} &#176;</h2>
     </div>
