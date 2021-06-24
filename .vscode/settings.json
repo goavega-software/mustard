@@ -1,0 +1,40 @@
+{
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        {
+            "language": "vue",
+            "autoFix": true
+        },
+        {
+            "language": "javascript",
+            "autoFix": true
+        },
+        {
+            "language": "javascriptreact",
+            "autoFix": true
+        },
+        {
+            "language": "typescriptreact",
+            "autoFix": true
+        }
+    ],
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.formatOnSave": false,
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": false,
+    },
+    "[typescript]": {
+        "editor.formatOnSave": false,
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": false,
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "[vue]": {
+        "editor.formatOnSave": false,
+    },
+}

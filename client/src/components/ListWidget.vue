@@ -56,9 +56,6 @@ export default class ListWidget extends Vue {
       return;
     }
     this.item = { ...item };
-    // Vue.set(this.item, "title", item.title);
-    // Vue.set(this.item, "description", item.description);
-    // Vue.set(this.item, "url", item.url);
   }
 }
 </script>

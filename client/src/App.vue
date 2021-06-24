@@ -137,7 +137,6 @@ $base: 20;
 .container {
   height: 100vh;
   display: grid;
-  height: 100vh;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 4px;
   width: 100%;
