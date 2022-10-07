@@ -1,56 +1,69 @@
 {
-    "dashboards": [{
-            "id": "goavega",
-            "widgets": [{
-                    "component": "WeatherWidget",
-                    "class": ["y2"],
-                    "props": {
-                        "eventId": "weather"
-                    },
-                    "state": {
-                        "weather": {}
-                    }
-                },
-                {
-                    "component": "TextWidget",
-                    "class": ["x2"],
-                    "props": {
-                        "title": "Mustard",
-                        "subtitle": "Hello",
-                        "background": "#ffdb58"
-                    }
-                },
-                {
-                    "component": "Clock",
-                    "class": ["y2"],
-                    "props": {
-                        "eventId": "clockWidget",
-                        "clockOneTz": "America/Los_Angeles",
-                        "clockThreeTz": "America/New_York"
-                    },
-                    "state": {
-                        "clockWidget": {}
-                    }
-                },
-                {
-                    "component": "SlideshowWidget",
-                    "class": ["y1", "x2"],
-                    "props": {
-                        "eventId": "slideshow"
-                    },
-                    "state": {
-                        "slideshow": {}
-                    }
-                }
-            ]
+  "dashboards": [
+    {
+      "id": "",
+      "widgets": [
+        {
+          "component": "TextWidget",
+          "class": ["x1 y2"],
+          "props": {
+            "eventId": "bsGenerator",
+            "background": "#ffdb58"
+          },
+          "state": {
+            "bsGenerator": {
+              "title": "Y",
+              "subtitle": "X"
+            }
+          }
+        },
+        {
+          "component": "TextWidget",
+          "class": ["x2 y4"],
+          "props": {
+            "eventId": "jotd"
+          },
+          "state": {
+            "jotd": {
+              "title": "Y",
+              "subtitle": "X"
+            }
+          }
+        },
+        {
+          "component": "Clock",
+          "class": ["x1 y2"],
+          "props": {
+            "eventId": "clockWidget",
+            "clockOneTz": "America/Los_Angeles",
+            "clockThreeTz": "America/New_York"
+          },
+          "state": {
+            "clockWidget": {}
+          }
         }
-
-    ],
-    "jobs": [{
-        "name": "s3show",
-        "schedule": "@every 1d"
-    }, {
-        "name": "weather",
-        "schedule": "@every 1h"
-    }]
+      ]
+    }
+  ],
+  "jobs": [
+    {
+      "name": "jotd",
+      "schedule": "@every 1h",
+      "api": {
+        "url": "https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single",
+        "method": "GET",
+        "transform": "[{\"operation\": \"shift\",   \"spec\": {\"data.title\": \"joke\", \"data.subtitle\": \"category\"}},{\"operation\": \"default\",\"spec\": {  \"event\": \"jotd\", \"data.background\": \"#ccc\"}}]"
+      }
+    },
+    {
+      "name": "bsgenerator",
+      "schedule": "@every 1h",
+      "api": {
+        "url": "https://corporatebs-generator.sameerkumar.website/",
+        "method": "GET",
+        "transform": "[{\"operation\": \"shift\",   \"spec\": {\"data.title\": \"phrase\"}},{\"operation\": \"default\",\"spec\": {  \"event\": \"bsGenerator\"}}]",
+        "authorization": "${MyKey}"
+      }
+    }
+  ]
 }
