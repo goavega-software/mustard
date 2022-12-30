@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/PuerkitoBio/goquery v1.5.1 // indirect
 	github.com/alexandrevicenzi/go-sse v1.5.0
-	github.com/aws/aws-sdk-go v1.30.7
+	github.com/aws/aws-sdk-go v1.33.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/goavega-software/restful v0.0.0-20221007070158-e03b0c47af92
 	github.com/joho/godotenv v1.3.0
