@@ -16,5 +16,5 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/segmentio/kafka-go v0.3.6
 	github.com/skip2/go-qrcode v0.0.0-20191027152451-9434209cb086
-	golang.org/x/crypto v0.0.0-20200323165209-0ec3e9974c59 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 )
