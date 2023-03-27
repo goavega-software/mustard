@@ -22,6 +22,8 @@ import WeatherWidget from "./components/WeatherWidget.vue";
 import SlideshowWidget from "./components/SlideshowWidget.vue";
 import { EventSink, eventType } from "./eventsink";
 import { BaseUrl } from "./constants";
+import { dashboardStaticConfig } from "./dashboard-static-config";
+
 type layoutType = {
   component: string;
   class: string | string[];
@@ -35,14 +37,16 @@ interface Classes {
 const getLayout = async () => {
   const url = window.location.pathname;
   const path = url.substring(url.lastIndexOf("/") + 1);
-  const response = await fetch(`${BaseUrl}api/layout`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify({ path })
-  });
-  return response.json() as Promise<layoutType[]>;
+  // const response = await fetch(`${BaseUrl}api/layout`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-type": "application/json"
+  //   },
+  //   body: JSON.stringify({ path })
+  // });
+  const response = dashboardStaticConfig['dashboards'][0]['widgets'];
+  // console.log("🚀 ~ file: App.vue:49 ~ getLayout ~ response:", response.json());
+  return response;
 };
 @Component({
   components: {
@@ -71,6 +75,7 @@ export default class App extends Vue {
     (async () => {
       // get the layout, for now we get it from local
       this.layout = await getLayout();
+      console.log("🚀 ~ file: App.vue:79 ~ App ~ this.layout:", this.layout);
       // set the Vuex state modules
       this.layout.forEach(layoutItem => {
         if (!layoutItem.state) {
