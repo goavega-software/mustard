@@ -43,7 +43,6 @@ import WeatherWidget from "./components/WeatherWidget.vue";
 import SlideshowWidget from "./components/SlideshowWidget.vue";
 import { EventSink, eventType } from "./eventsink";
 import { BaseUrl } from "./constants";
-import { dashboardStaticConfig } from "./dashboard-static-config";
 import { GridLayout, GridItem } from "vue-grid-layout";
 
 type layoutType = {
@@ -198,7 +197,12 @@ export default class App extends Vue {
 //   }
 // }
 .vue-grid-layout {
-    background: #eee;
+    background: #333;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 4px;
+    width: 100%;
+    grid-auto-rows: 1fr;
+    height: 100vh !important;
 }
 .vue-grid-item:not(.vue-grid-placeholder) {
     background: #ccc;
@@ -221,6 +225,7 @@ export default class App extends Vue {
     margin: auto;
     height: 100%;
     width: 100%;
+    color: red;
 }
 .vue-grid-item .no-drag {
     height: 100%;
