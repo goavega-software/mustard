@@ -1463,6 +1463,252 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@interactjs/actions@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/actions@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: 0d2f66562b8a0b16dfa020b19784489d9c5471069dfc6bf8a1c0e0f9382ddb9aa5392ff7448aa420312f2019553147f17371b720d8001b4fb50550de10c13140
+  languageName: node
+  linkType: hard
+
+"@interactjs/arrange@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/arrange@npm:1.10.2"
+  checksum: b25c172a764a1fa7c695384efb1715983fc7095ae39e7dd0dfce7f8978fc53ea8c03cca0b6f873b4f55b2a2e026b2a51bc5a976b9c41104641d3df8861f48943
+  languageName: node
+  linkType: hard
+
+"@interactjs/auto-scroll@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/auto-scroll@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: 5cb04e7cab4fb42b56551db7cdc671ab236bebba29142a455bc92674561edeff21fac27db2e1c2f8c3cd8cafcd0129bdff19de2013b064fd01d98ff0a594fdcf
+  languageName: node
+  linkType: hard
+
+"@interactjs/auto-start@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/auto-start@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: 8bcda86416996085d2acd28656e0869bc7667cb33ee9117f7a9946d28bfbb67e38b95e667e988f92136ff2247072fcd87e26c1d574095531388b0149b700da07
+  languageName: node
+  linkType: hard
+
+"@interactjs/clone@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/clone@npm:1.10.2"
+  checksum: 4523d7eea16f79b6fde46589fcf60a38c59fb23c91d3becf946e8d3bc766f27d1978c79094fc6077fa33fa30650048c9ed89b4a07648201ab71a565e99d20fb8
+  languageName: node
+  linkType: hard
+
+"@interactjs/core@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/core@npm:1.10.2"
+  peerDependencies:
+    "@interactjs/utils": 1.10.2
+  checksum: 76cd086d77071a1574b1a75930ead9bbc551c3d3e2c61d044d272e40fbda00a9d125c76b1a23516f5d09f966f4bb7ff201f12ad523eeb375f1a82f4b52fd7c8a
+  languageName: node
+  linkType: hard
+
+"@interactjs/dev-tools@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/dev-tools@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: b6b9cfb1822a3dd48ec9dbf44229b10e57615f68928eb2de856aff5d5b4556c13fc21646629e5d232f858207d2746b777da596b10aa1072df8684865be525475
+  languageName: node
+  linkType: hard
+
+"@interactjs/feedback@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/feedback@npm:1.10.2"
+  checksum: 7752bc863042d4d20160141e89e1abcae6c9bb0ddba845868ff78c273c1c7cb43100f5e1d9f27fde338ec025289649711558b6bffc3d692342525997904f6ae3
+  languageName: node
+  linkType: hard
+
+"@interactjs/inertia@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/inertia@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+    "@interactjs/offset": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/modifiers": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: d4c3c8cf7b3bf31f3f785597f57cbf12dabbe69b1a185017454e7bb2dab081b795cb146d1598a7d50f92bfe00af3faa58abd5ee6cc658d1f2f45ebc027df9992
+  languageName: node
+  linkType: hard
+
+"@interactjs/interact@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/interact@npm:1.10.2"
+  dependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/types": 1.10.2
+    "@interactjs/utils": 1.10.2
+  checksum: be1614668a090748193f10e7c04f874d6c5b1c21873f35327193f788f3bd4c3a3d62ec913527f4ef23cda3cae25284e255546fa362751a9c671539f1672b8088
+  languageName: node
+  linkType: hard
+
+"@interactjs/interactjs@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/interactjs@npm:1.10.2"
+  dependencies:
+    "@interactjs/actions": 1.10.2
+    "@interactjs/arrange": 1.10.2
+    "@interactjs/auto-scroll": 1.10.2
+    "@interactjs/auto-start": 1.10.2
+    "@interactjs/clone": 1.10.2
+    "@interactjs/core": 1.10.2
+    "@interactjs/dev-tools": 1.10.2
+    "@interactjs/feedback": 1.10.2
+    "@interactjs/inertia": 1.10.2
+    "@interactjs/interact": 1.10.2
+    "@interactjs/modifiers": 1.10.2
+    "@interactjs/multi-target": 1.10.2
+    "@interactjs/offset": 1.10.2
+    "@interactjs/pointer-events": 1.10.2
+    "@interactjs/react": 1.10.2
+    "@interactjs/reflow": 1.10.2
+    "@interactjs/utils": 1.10.2
+    "@interactjs/vue": 1.10.2
+  checksum: aee0adfde1251cb09aed18230bf63b5c836cc1bad26904cc8816a6f5f04cfe233e6df938bf7379f901a2fac45f5235c4492e15c01c20a051fd21f861aa50568a
+  languageName: node
+  linkType: hard
+
+"@interactjs/modifiers@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/modifiers@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+    "@interactjs/snappers": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: dfe75439dc7b29856e61812b3790cd396d01cbf87a39e9808a7bdff8b0f7274440d6909ec578d555855f3f1f3c21587d01f946dd3faca237f936ccdb8379f6aa
+  languageName: node
+  linkType: hard
+
+"@interactjs/multi-target@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/multi-target@npm:1.10.2"
+  checksum: 2825cb7d8751a264570d30ea627270e2c9be8ff946c028379c9236d7a501122c1737312bae31d2b0388008e71c1a80c072833742084fdf1be8425fa5aa8a16c1
+  languageName: node
+  linkType: hard
+
+"@interactjs/offset@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/offset@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: 0d7bc3cc957a44723f198f6a04aefa0c0e4fcffc1d66f226417f565b1c8b698834e42f354740a3e2985efa7ff9553f0203b4bcf27b3f3101a6cf8f14910a2606
+  languageName: node
+  linkType: hard
+
+"@interactjs/pointer-events@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/pointer-events@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: 82f7317d72681332877039e7f4f167ad9cb1eb402236466d3c32940643b308ffe1d98475bdd51304b8a733a2c527746a8b81fcb1db05c53371438550d0c292e0
+  languageName: node
+  linkType: hard
+
+"@interactjs/react@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/react@npm:1.10.2"
+  checksum: 4020c291f1d1fd41772c8383961b147a4e2fa6f4a09f55ab7afc7d7c362ca9b097a5faea052097cd8bbba5eba344c25afa58f724cd770029a7aacca6199bdf08
+  languageName: node
+  linkType: hard
+
+"@interactjs/reflow@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/reflow@npm:1.10.2"
+  dependencies:
+    "@interactjs/interact": 1.10.2
+  peerDependencies:
+    "@interactjs/core": 1.10.2
+    "@interactjs/utils": 1.10.2
+  dependenciesMeta:
+    "@interactjs/interact":
+      optional: true
+  checksum: fbb33793ce2d05932d664080a2427653bc4c55c5da7626d6c436e13e55171e40fba8038ddb9ec06c53e550cffc21bbbc2c6f384999b44e1a777617edc52a61f5
+  languageName: node
+  linkType: hard
+
+"@interactjs/snappers@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/snappers@npm:1.10.2"
+  peerDependencies:
+    "@interactjs/utils": 1.10.2
+  checksum: 581e52510eb1d29087dcde884901657a3aa0e46ce9f9ffbe29e4f0c190accce10c6f6e5c7671e91c2acd710da137cfd4d6ba0c9264af87a421a0ad34b44b351f
+  languageName: node
+  linkType: hard
+
+"@interactjs/types@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/types@npm:1.10.2"
+  checksum: 8f0682c95ce65642998ed93b27ac036926829dad690dfec6702229939cc45122c96f42e49a8900b1136ba946eae5ea7c05e37748f001d8d1e965540cbc41ed00
+  languageName: node
+  linkType: hard
+
+"@interactjs/utils@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/utils@npm:1.10.2"
+  checksum: 0c7dda10d8fa199f75321156e24efb87791c39fdfee65810ff2f3015ad2d6920d74a704b3b54efc9d3ffe2cf0ef803697b220ec57081f35aa5376e6f4132956e
+  languageName: node
+  linkType: hard
+
+"@interactjs/vue@npm:1.10.2":
+  version: 1.10.2
+  resolution: "@interactjs/vue@npm:1.10.2"
+  checksum: 355aad640fdd06e71d996a3ba8cc98e1fc3fe29e23f1b4fcefdadf31e7bae55c00b7d7148c3dcf3c52a288e2ee974cc3334fd21add7791c5088b02347a95ed20
+  languageName: node
+  linkType: hard
+
 "@intervolga/optimize-cssnano-plugin@npm:^1.0.5":
   version: 1.0.6
   resolution: "@intervolga/optimize-cssnano-plugin@npm:1.0.6"
@@ -2897,6 +3143,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"batch-processor@npm:1.0.0":
+  version: 1.0.0
+  resolution: "batch-processor@npm:1.0.0"
+  checksum: 5519b024f6cd0e95a543bb3edf0ae19e5badae0c32b30b41839b4469bbb1f91e14fc04bff3759cd9c2621aa9e16def48c938783e9027e7ec977fba62d537a468
+  languageName: node
+  linkType: hard
+
 "batch@npm:0.6.1":
   version: 0.6.1
   resolution: "batch@npm:0.6.1"
@@ -3704,6 +3957,7 @@ __metadata:
     vue: ^2.6.11
     vue-apexcharts: ~1.5.2
     vue-class-component: ^7.2.2
+    vue-grid-layout: ^2.4.0
     vue-property-decorator: ^8.3.0
     vue-sse: ~1.0.2
     vue-template-compiler: ^2.6.11
@@ -4837,6 +5091,15 @@ __metadata:
   version: 1.4.340
   resolution: "electron-to-chromium@npm:1.4.340"
   checksum: b7ffa64814efa49891c23ca0560f6831a992fa904c463bbf635ceccd57821dd0f4ecc22fa066860d34d9614b0ef4b27b385a5f59aed5dcf73ed832d58f746780
+  languageName: node
+  linkType: hard
+
+"element-resize-detector@npm:^1.2.1":
+  version: 1.2.4
+  resolution: "element-resize-detector@npm:1.2.4"
+  dependencies:
+    batch-processor: 1.0.0
+  checksum: 81c47b7e229c303889d3a9d78ec3f3232e88a6682f1e2424fb0632d9b4f503b2ca011e6954321060604da07749a5a972b6a175fdf6c6806093a3b80a304cde7b
   languageName: node
   linkType: hard
 
@@ -12047,6 +12310,21 @@ __metadata:
   peerDependencies:
     eslint: ">=5.0.0"
   checksum: 64fbab5141e5a90467e381ba7ec93135c1cb516bbd59fa85cd01b4296e0cd88932da9c25fdf39957233b41a8e8f88b8b778de56011686c5ba5b45550a6005d0a
+  languageName: node
+  linkType: hard
+
+"vue-grid-layout@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "vue-grid-layout@npm:2.4.0"
+  dependencies:
+    "@interactjs/actions": 1.10.2
+    "@interactjs/auto-scroll": 1.10.2
+    "@interactjs/auto-start": 1.10.2
+    "@interactjs/dev-tools": 1.10.2
+    "@interactjs/interactjs": 1.10.2
+    "@interactjs/modifiers": 1.10.2
+    element-resize-detector: ^1.2.1
+  checksum: aab5bec4655bd52acf6e4e87976ab47bf485d54a38b245d8104bf7a5e9fe4de2b24f53e7380c24afae7dadd4e2613806837fe62389c3f5ab89f3127828380471
   languageName: node
   linkType: hard
 
