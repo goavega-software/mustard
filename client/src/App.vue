@@ -2,23 +2,27 @@
   <!-- <div id="app">
     <div class="container"> -->
       <grid-layout :layout.sync="layout"
-              :col-num="12"
-              :row-height="30"
+              :col-num="6"
+              :row-height="185"
               :is-draggable="draggable"
               :is-resizable="resizable"
-              :vertical-compact="false"
-              :use-css-transforms="false"
+              :isBounded="bounded"
+              :vertical-compact="true"
+              :use-css-transforms="true"
       >
         <grid-item v-for="(item, index) in layout"
-                   v-bind:key=index
+                   v-bind:key="index"
                    :static="item.static"
                    :x="item.x"
                    :y="item.y"
                    :w="item.w"
                    :h="item.h"
                    :i="item.i"
+                   :minW="minW"
+                   :minH="minH"
         >
-          <span class="text">{{item.i}}</span>
+          <div :is="item.component" v-bind="getProps(index)" />
+          <!-- <span class="text">{{item.i}}</span> -->
         </grid-item>
     </grid-layout>
       <!-- <div
@@ -51,6 +55,8 @@ type layoutType = {
   w: number;
   h?: number;
   i: string;
+  props: Record<string, unknown>;
+  state?: Record<string, unknown>;
 };
 interface Classes {
   column: boolean;
@@ -89,16 +95,16 @@ export default class App extends Vue {
 
       console.log("🚀 ~ file: App.vue:79 ~ App ~ this.layout:", this.layout);
       // set the Vuex state modules
-      // this.layout.forEach(layoutItem => {
-      //   if (!layoutItem.state) {
-      //     return;
-      //   }
-      //   const moduleState = {
-      //     state: () => ({ data: {} })
-      //   };
-      //   const stateKey = Object.keys(layoutItem.state)[0];
-      //   this.$store.registerModule(stateKey, moduleState);
-      // });
+      this.layout.forEach(layoutItem => {
+        if (!layoutItem.state) {
+          return;
+        }
+        const moduleState = {
+          state: () => ({ data: {} })
+        };
+        const stateKey = Object.keys(layoutItem.state)[0];
+        this.$store.registerModule(stateKey, moduleState);
+      });
     })();
     (async () => {
       await this.eventServer.init((message: eventType<object>) =>
@@ -106,16 +112,73 @@ export default class App extends Vue {
       );
     })();
   }
+  
   data() {
     return {
         layout: [
-            {"x":0,"y":0,"w":2,"h":2,"i":"bsGenerator", static: false},
-            {"x":2,"y":0,"w":2,"h":4,"i":"jotd", static: false},
-            {"x":4,"y":0,"w":2,"h":5,"i":"clock", static: false}
+            {
+              "x":0,
+              "y":0,
+              "w":2,
+              "h":2,
+              "i":"bsGenerator", 
+              "props": {
+                "eventId": "bsGenerator",
+                "background": "#ffdb58"
+              },
+              "static": false,
+              "component": "TextWidget",
+                            "state": {
+                "bsGenerator": {
+                  "title": "Y",
+                  "subtitle": "X"
+                }
+              }
+            },
+            {
+              "x":2,
+              "y":0,
+              "w":2,
+              "h":5,
+              "i":"jotd", 
+              "props": {
+                "eventId": "jotd"
+              },
+              "static": false,
+              "component": "TextWidget",
+              "state": {
+                "jotd": {
+                  "title": "Y",
+                  "subtitle": "X"
+                }
+              }
+            },
+            {
+              "x":4,
+              "y":0,
+              "w":2,
+              "h":2,
+              "i":"clock", 
+              "props": {
+                "eventId": "clockWidget",
+                "clockOneTz": "America/Los_Angeles",
+                "clockThreeTz": "America/New_York"
+              },
+              "static": false,
+              "clockOneTz": "America/Los_Angeles",
+              "clockThreeTz": "America/New_York",
+              "component": "Clock",
+              "state": {
+                "clockWidget": {}
+              }
+            }
         ],
         draggable: true,
         resizable: true,
-        index: 0
+        bounded: false,
+        index: 0,
+        minW: 2,
+        minH: 2
     }
   }
   // getClass(index: number): { column: boolean } & Record<string, boolean> {
@@ -130,9 +193,10 @@ export default class App extends Vue {
   //   });
   //   return classes;
   // }
-  // getProps(index: number): Record<string, unknown> {
-  //   return this.layout[index].props;
-  // }
+  getProps(index: number): Record<string, unknown> {
+    console.log("🚀 ~ file: App.vue:183 ~ App ~ getProps ~ this.layout[index].props:", this.layout[index].props)
+    return this.layout[index].props;
+  }
   beforeDestroy() {
     this.eventServer.destory();
   }
@@ -198,15 +262,15 @@ export default class App extends Vue {
 // }
 .vue-grid-layout {
     background: #333;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 4px;
+    // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    // gap: 4px;
     width: 100%;
-    grid-auto-rows: 1fr;
+    // grid-auto-rows: 1fr;
     height: 100vh !important;
 }
 .vue-grid-item:not(.vue-grid-placeholder) {
     background: #ccc;
-    border: 1px solid black;
+    border: 0.5px solid black;
 }
 .vue-grid-item .resizing {
     opacity: 0.9;
