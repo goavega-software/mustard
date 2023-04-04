@@ -1,7 +1,8 @@
 <template>
   <!-- <div id="app">
     <div class="container"> -->
-      <grid-layout :layout.sync="layout"
+      <grid-layout 
+              :layout.sync="layout"
               :col-num="6"
               :row-height="185"
               :is-draggable="draggable"
@@ -11,7 +12,8 @@
               :use-css-transforms="true"
       >
         <grid-item v-for="(item, index) in layout"
-                   v-bind:key="index"
+                   v-bind:key=index
+                   v-bind:class="getClass(index)"
                    :static="item.static"
                    :x="item.x"
                    :y="item.y"
@@ -20,6 +22,9 @@
                    :i="item.i"
                    :minW="minW"
                    :minH="minH"
+                   @resized="resizedEvent"
+                   @moved="movedEvent"
+                   @container-resized="containerResizedEvent"
         >
           <div :is="item.component" v-bind="getProps(index)" />
           <!-- <span class="text">{{item.i}}</span> -->
@@ -55,9 +60,19 @@ type layoutType = {
   w: number;
   h?: number;
   i: string;
+  class: string | string[];
   props: Record<string, unknown>;
   state?: Record<string, unknown>;
 };
+
+type dimensionJsonType = {
+  newX: number;
+  newY: number;
+  newW: number;
+  newH?: number;
+  i: string;
+};
+
 interface Classes {
   column: boolean;
   [key: string]: boolean;
@@ -78,6 +93,12 @@ interface Classes {
 export default class App extends Vue {
   private eventServer = new EventSink();
   private layout: Array<layoutType> = [];
+  private dimensionJson: dimensionJsonType = {
+    newX: 0,
+    newY: 0,
+    newW: 0,
+    i: ""
+  };
 
   created() {
     setTimeout(
@@ -93,7 +114,7 @@ export default class App extends Vue {
       // get the layout, for now we get it from local
       // this.layout = layout;
 
-      console.log("🚀 ~ file: App.vue:79 ~ App ~ this.layout:", this.layout);
+      // console.log("🚀 ~ file: App.vue:79 ~ App ~ this.layout:", this.layout);
       // set the Vuex state modules
       this.layout.forEach(layoutItem => {
         if (!layoutItem.state) {
@@ -121,6 +142,7 @@ export default class App extends Vue {
               "y":0,
               "w":2,
               "h":2,
+              "class": ["x1 y2"],
               "i":"bsGenerator", 
               "props": {
                 "eventId": "bsGenerator",
@@ -140,6 +162,7 @@ export default class App extends Vue {
               "y":0,
               "w":2,
               "h":5,
+              "class": ["x2 y4"],
               "i":"jotd", 
               "props": {
                 "eventId": "jotd"
@@ -158,6 +181,7 @@ export default class App extends Vue {
               "y":0,
               "w":2,
               "h":2,
+              "class": ["x1 y2"],
               "i":"clock", 
               "props": {
                 "eventId": "clockWidget",
@@ -178,25 +202,48 @@ export default class App extends Vue {
         bounded: false,
         index: 0,
         minW: 2,
-        minH: 2
+        minH: 2,
+        eventLog: [],
     }
   }
-  // getClass(index: number): { column: boolean } & Record<string, boolean> {
-  //   const classes: Classes = {
-  //     column: false
-  //   };
-  //   const classNames = Array.isArray(this.layout[index].class)
-  //     ? this.layout[index].class
-  //     : [this.layout[index].class];
-  //   (classNames as string[]).forEach(cls => {
-  //     classes[cls] = false;
-  //   });
-  //   return classes;
-  // }
+
+  movedEvent(i:string, newX:number, newY:number) {
+    console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+    this.dimensionJson['i'] = i;
+    this.dimensionJson['newX'] = newX;
+    this.dimensionJson['newY'] = newY;
+  }
+  resizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
+    console.log("RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+    this.dimensionJson['i'] = i;
+    this.dimensionJson['newH'] = newH;
+    this.dimensionJson['newW'] = newW;
+  }
+  containerResizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
+    console.log("CONTAINER RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+    this.dimensionJson['i'] = i;
+    this.dimensionJson['newH'] = newH;
+    this.dimensionJson['newW'] = newW;
+  }
+
+  getClass(index: number): { column: boolean } & Record<string, boolean> {
+    const classes: Classes = {
+      column: false
+    };
+    const classNames = Array.isArray(this.layout[index].class)
+      ? this.layout[index].class
+      : [this.layout[index].class];
+    (classNames as string[]).forEach((cls: string|number) => {
+      classes[cls] = false;
+    });
+    return classes;
+  }
+
   getProps(index: number): Record<string, unknown> {
-    console.log("🚀 ~ file: App.vue:183 ~ App ~ getProps ~ this.layout[index].props:", this.layout[index].props)
+    // console.log("🚀 ~ file: App.vue:183 ~ App ~ getProps ~ this.layout[index].props:", this.layout[index].props)
     return this.layout[index].props;
   }
+
   beforeDestroy() {
     this.eventServer.destory();
   }
