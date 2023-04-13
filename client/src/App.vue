@@ -3,7 +3,7 @@
     <div class="container"> -->
     <div>
       <div class="buttonClass">
-        <button class="button" @click="addItem">Save widget dimensions</button>
+        <button class="button" @click="saveJson">Save widget dimensions</button>
       </div>
       <grid-layout 
               :layout.sync="layout"
@@ -14,7 +14,6 @@
               :isBounded="bounded"
               :vertical-compact="true"
               :use-css-transforms="true"
-              @layout-mounted="layoutMountedEvent"
       >
         <grid-item 
               v-for="(item, index) in layout"
@@ -95,6 +94,7 @@ interface Classes {
 export default class App extends Vue {
   private eventServer = new EventSink();
   private layout: Array<layoutType> = [];
+  private tempDimensionJson: Array<layoutType> = [];
   private dimensionJson: Array<layoutType> = [];
 
   created() {
@@ -108,7 +108,7 @@ export default class App extends Vue {
   }
   mounted() {
     (async () => {
-      this.dimensionJson = this.layout;
+      this.tempDimensionJson = this.layout;
       this.layout.forEach(layoutItem => {
         if (!layoutItem.state) {
           return;
@@ -201,32 +201,21 @@ export default class App extends Vue {
 
   movedEvent(i:string, newX:number, newY:number) {
     const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
-    console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
-    this.dimensionJson[index]['i'] = i;
-    this.dimensionJson[index]['x'] = newX;
-    this.dimensionJson[index]['y'] = newY;
-    console.log("🚀 ~ file: App.vue:209 ~ App ~ movedEvent ~ this.dimensionJson:", this.dimensionJson)
+    this.tempDimensionJson[index]['i'] = i;
+    this.tempDimensionJson[index]['x'] = newX;
+    this.tempDimensionJson[index]['y'] = newY;
   }
   resizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
     const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
-    console.log("RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
-    this.dimensionJson[index]['i'] = i;
-    this.dimensionJson[index]['h'] = newH;
-    this.dimensionJson[index]['w'] = newW;
-    console.log("🚀 ~ file: App.vue:216 ~ App ~ resizedEvent ~ this.dimensionJson:", this.dimensionJson)
+    this.tempDimensionJson[index]['i'] = i;
+    this.tempDimensionJson[index]['h'] = newH;
+    this.tempDimensionJson[index]['w'] = newW;
   }
   containerResizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
     const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
-    console.log("CONTAINER RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
-    this.dimensionJson[index]['i'] = i;
-    this.dimensionJson[index]['h'] = newH;
-    this.dimensionJson[index]['w'] = newW;
-    console.log("🚀 ~ file: App.vue:223 ~ App ~ containerResizedEvent ~ this.dimensionJson:", this.dimensionJson)
-  }
-
-  layoutMountedEvent (newLayout: VNodeChildrenArrayContents){
-    console.log("Mounted layout: ", newLayout)
-    console.log("🚀 ~ file: App.vue:230 ~ App ~ containerResizedEvent ~ this.dimensionJson:", this.dimensionJson)
+    this.tempDimensionJson[index]['i'] = i;
+    this.tempDimensionJson[index]['h'] = newH;
+    this.tempDimensionJson[index]['w'] = newW;
   }
 
   getClass(index: number): { column: boolean } & Record<string, boolean> {
@@ -246,7 +235,9 @@ export default class App extends Vue {
     return this.layout[index].props;
   }
   
-  addItem() {
+  saveJson() {
+    this.dimensionJson = this.tempDimensionJson;
+    console.log("🚀 ~ file: App.vue:252 ~ App ~ saveJson ~ dimensionJson:", this.dimensionJson)
     console.log('button clicked!!!!!!!')
   }
   beforeDestroy() {
