@@ -1,6 +1,10 @@
 <template>
   <!-- <div id="app">
     <div class="container"> -->
+    <div>
+      <div class="buttonClass">
+        <button class="button" @click="addItem">Save widget dimensions</button>
+      </div>
       <grid-layout 
               :layout.sync="layout"
               :col-num="6"
@@ -10,26 +14,29 @@
               :isBounded="bounded"
               :vertical-compact="true"
               :use-css-transforms="true"
+              @layout-mounted="layoutMountedEvent"
       >
-        <grid-item v-for="(item, index) in layout"
-                   v-bind:key=index
-                   v-bind:class="getClass(index)"
-                   :static="item.static"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="item.i"
-                   :minW="minW"
-                   :minH="minH"
-                   @resized="resizedEvent"
-                   @moved="movedEvent"
-                   @container-resized="containerResizedEvent"
+        <grid-item 
+              v-for="(item, index) in layout"
+              v-bind:key=index
+              v-bind:class="getClass(index)"
+              :static="item.static"
+              :x="item.x"
+              :y="item.y"
+              :w="item.w"
+              :h="item.h"
+              :i="item.i"
+              :minW="minW"
+              :minH="minH"
+              @resized="resizedEvent"
+              @moved="movedEvent"
+              @container-resized="containerResizedEvent"
         >
-          <div :is="item.component" v-bind="getProps(index)" />
-          <!-- <span class="text">{{item.i}}</span> -->
-        </grid-item>
-    </grid-layout>
+        <div :is="item.component" v-bind="getProps(index)" class="widgetClass"/>
+        <!-- <span class="text">{{item.i}}</span> -->
+      </grid-item>
+      </grid-layout>
+    </div>
       <!-- <div
         v-for="(l, index) in layout"
         v-bind:key="index"
@@ -53,6 +60,7 @@ import SlideshowWidget from "./components/SlideshowWidget.vue";
 import { EventSink, eventType } from "./eventsink";
 import { BaseUrl } from "./constants";
 import { GridLayout, GridItem } from "vue-grid-layout";
+import { VNodeChildrenArrayContents } from "vue/types/umd";
 
 type layoutType = {
   x: number;
@@ -60,17 +68,11 @@ type layoutType = {
   w: number;
   h?: number;
   i: string;
+  index: number;
   class: string | string[];
   props: Record<string, unknown>;
   state?: Record<string, unknown>;
-};
-
-type dimensionJsonType = {
-  newX: number;
-  newY: number;
-  newW: number;
-  newH?: number;
-  i: string;
+  component: string;
 };
 
 interface Classes {
@@ -93,12 +95,7 @@ interface Classes {
 export default class App extends Vue {
   private eventServer = new EventSink();
   private layout: Array<layoutType> = [];
-  private dimensionJson: dimensionJsonType = {
-    newX: 0,
-    newY: 0,
-    newW: 0,
-    i: ""
-  };
+  private dimensionJson: Array<layoutType> = [];
 
   created() {
     setTimeout(
@@ -111,11 +108,7 @@ export default class App extends Vue {
   }
   mounted() {
     (async () => {
-      // get the layout, for now we get it from local
-      // this.layout = layout;
-
-      // console.log("🚀 ~ file: App.vue:79 ~ App ~ this.layout:", this.layout);
-      // set the Vuex state modules
+      this.dimensionJson = this.layout;
       this.layout.forEach(layoutItem => {
         if (!layoutItem.state) {
           return;
@@ -150,7 +143,7 @@ export default class App extends Vue {
               },
               "static": false,
               "component": "TextWidget",
-                            "state": {
+              "state": {
                 "bsGenerator": {
                   "title": "Y",
                   "subtitle": "X"
@@ -203,27 +196,37 @@ export default class App extends Vue {
         index: 0,
         minW: 2,
         minH: 2,
-        eventLog: [],
     }
   }
 
   movedEvent(i:string, newX:number, newY:number) {
+    const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
     console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
-    this.dimensionJson['i'] = i;
-    this.dimensionJson['newX'] = newX;
-    this.dimensionJson['newY'] = newY;
+    this.dimensionJson[index]['i'] = i;
+    this.dimensionJson[index]['x'] = newX;
+    this.dimensionJson[index]['y'] = newY;
+    console.log("🚀 ~ file: App.vue:209 ~ App ~ movedEvent ~ this.dimensionJson:", this.dimensionJson)
   }
   resizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
+    const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
     console.log("RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
-    this.dimensionJson['i'] = i;
-    this.dimensionJson['newH'] = newH;
-    this.dimensionJson['newW'] = newW;
+    this.dimensionJson[index]['i'] = i;
+    this.dimensionJson[index]['h'] = newH;
+    this.dimensionJson[index]['w'] = newW;
+    console.log("🚀 ~ file: App.vue:216 ~ App ~ resizedEvent ~ this.dimensionJson:", this.dimensionJson)
   }
   containerResizedEvent(i:string, newH:number, newW:number, newHPx:number, newWPx:number) {
+    const index = i== 'bsGenerator' ? 0 : (i== 'jotd' ? 1 : 2)
     console.log("CONTAINER RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
-    this.dimensionJson['i'] = i;
-    this.dimensionJson['newH'] = newH;
-    this.dimensionJson['newW'] = newW;
+    this.dimensionJson[index]['i'] = i;
+    this.dimensionJson[index]['h'] = newH;
+    this.dimensionJson[index]['w'] = newW;
+    console.log("🚀 ~ file: App.vue:223 ~ App ~ containerResizedEvent ~ this.dimensionJson:", this.dimensionJson)
+  }
+
+  layoutMountedEvent (newLayout: VNodeChildrenArrayContents){
+    console.log("Mounted layout: ", newLayout)
+    console.log("🚀 ~ file: App.vue:230 ~ App ~ containerResizedEvent ~ this.dimensionJson:", this.dimensionJson)
   }
 
   getClass(index: number): { column: boolean } & Record<string, boolean> {
@@ -240,10 +243,12 @@ export default class App extends Vue {
   }
 
   getProps(index: number): Record<string, unknown> {
-    // console.log("🚀 ~ file: App.vue:183 ~ App ~ getProps ~ this.layout[index].props:", this.layout[index].props)
     return this.layout[index].props;
   }
-
+  
+  addItem() {
+    console.log('button clicked!!!!!!!')
+  }
   beforeDestroy() {
     this.eventServer.destory();
   }
@@ -314,6 +319,7 @@ export default class App extends Vue {
     width: 100%;
     // grid-auto-rows: 1fr;
     height: 100vh !important;
+    overflow: hidden;
 }
 .vue-grid-item:not(.vue-grid-placeholder) {
     background: #ccc;
@@ -325,19 +331,19 @@ export default class App extends Vue {
 .vue-grid-item .static {
     background: #cce;
 }
-.vue-grid-item .text {
-    font-size: 24px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    height: 100%;
-    width: 100%;
-    color: red;
-}
+// .vue-grid-item .text {
+//     font-size: 24px;
+//     text-align: center;
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     margin: auto;
+//     height: 100%;
+//     width: 100%;
+//     color: red;
+// }
 .vue-grid-item .no-drag {
     height: 100%;
     width: 100%;
@@ -361,5 +367,27 @@ export default class App extends Vue {
     background-origin: content-box;
     box-sizing: border-box;
     cursor: pointer;
+}
+.buttonClass {
+  background: #333;
+  display: flex;  
+  justify-content: center;  
+  align-items: center;
+  // top: 50%;
+  // left: 50%;
+  // position: absolute;
+}
+.button {
+  background-color: #035880;
+  color: white;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 100px;
+  // margin: 4px 2px;
+  padding: 10px 24px;
+  font-weight: bold;
+}
+.widgetClass {
+  position: relative !important;
 }
 </style>
