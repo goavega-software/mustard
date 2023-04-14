@@ -1,6 +1,4 @@
 <template>
-  <!-- <div id="app">
-    <div class="container"> -->
     <div>
       <div class="buttonClass">
         <button class="button" @click="saveJson">Save widget dimensions</button>
@@ -32,20 +30,9 @@
               @container-resized="containerResizedEvent"
         >
         <div :is="item.component" v-bind="getProps(index)" class="widgetClass"/>
-        <!-- <span class="text">{{item.i}}</span> -->
       </grid-item>
       </grid-layout>
     </div>
-      <!-- <div
-        v-for="(l, index) in layout"
-        v-bind:key="index"
-        v-bind:class="getClass(index)"
-      >
-        <div :is="l.component" v-bind="getProps(index)" />
-      </div> -->
-
-    <!-- </div>
-  </div> -->
 </template>
 
 <script lang="ts">
@@ -247,68 +234,10 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-// body {
-//   margin: 0;
-//   padding: 0;
-//   background: #333;
-//   color: #efefef;
-//   font-family: Karla, sans-serif;
-// }
 
-// body * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-size: 15px;
-// }
-
-// $base: 20;
-
-// @for $i from 1 through 4 {
-//   h#{$i} {
-//     font-size: $base + (4-$i) * 10px;
-//   }
-// }
-
-// .container {
-//   height: 100vh;
-//   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-//   gap: 4px;
-//   width: 100%;
-//   grid-auto-rows: 1fr;
-// }
-
-// .column {
-//   @for $i from 1 through 4 {
-//     &.x#{$i} {
-//       grid-column-end: span $i;
-//     }
-//     &.y#{$i} {
-//       grid-row-end: span $i;
-//     }
-//   }
-//   & > div {
-//     height: 100%;
-//   }
-// }
-// .text-center {
-//   text-align: center;
-// }
-// .center {
-//   display: flex;
-//   align-items: center;
-//   > div {
-//     text-align: center;
-//     width: 100%;
-//   }
-// }
 .vue-grid-layout {
     background: #333;
-    // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    // gap: 4px;
     width: 100%;
-    // grid-auto-rows: 1fr;
     height: 100vh !important;
     overflow: hidden;
 }
@@ -322,19 +251,6 @@ export default class App extends Vue {
 .vue-grid-item .static {
     background: #cce;
 }
-// .vue-grid-item .text {
-//     font-size: 24px;
-//     text-align: center;
-//     position: absolute;
-//     top: 0;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     margin: auto;
-//     height: 100%;
-//     width: 100%;
-//     color: red;
-// }
 .vue-grid-item .no-drag {
     height: 100%;
     width: 100%;
@@ -364,9 +280,6 @@ export default class App extends Vue {
   display: flex;  
   justify-content: center;  
   align-items: center;
-  // top: 50%;
-  // left: 50%;
-  // position: absolute;
 }
 .button {
   background-color: #035880;
@@ -374,7 +287,6 @@ export default class App extends Vue {
   width: fit-content;
   max-width: 100%;
   min-width: 100px;
-  // margin: 4px 2px;
   padding: 10px 24px;
   font-weight: bold;
 }
