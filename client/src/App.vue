@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div v-if="urlLocation == '/dashboard/admin/manage/1'" >
+      <WidgetDragDropDashboard/>
+    </div>
+
     <div class="container">
       <div
         v-for="(l, index) in layout"
@@ -20,6 +24,7 @@ import ListWidget from "./components/ListWidget.vue";
 import ComparisonWidget from "./components/ComparisonWidget.vue";
 import WeatherWidget from "./components/WeatherWidget.vue";
 import SlideshowWidget from "./components/SlideshowWidget.vue";
+import WidgetDragDropDashboard from "./components/WidgetDragDropDashboard.vue";
 import { EventSink, eventType } from "./eventsink";
 import { BaseUrl } from "./constants";
 type layoutType = {
@@ -42,6 +47,7 @@ const getLayout = async () => {
     },
     body: JSON.stringify({ path })
   });
+
   return response.json() as Promise<layoutType[]>;
 };
 @Component({
@@ -51,13 +57,14 @@ const getLayout = async () => {
     ListWidget,
     ComparisonWidget,
     WeatherWidget,
-    SlideshowWidget
+    SlideshowWidget,
+    WidgetDragDropDashboard
   }
 })
 export default class App extends Vue {
   private eventServer = new EventSink();
   private layout: Array<layoutType> = [];
-
+  private urlLocation = "";
   created() {
     setTimeout(
       async () =>
@@ -69,19 +76,22 @@ export default class App extends Vue {
   }
   mounted() {
     (async () => {
+      this.urlLocation = window.location.pathname;
       // get the layout, for now we get it from local
-      this.layout = await getLayout();
-      // set the Vuex state modules
-      this.layout.forEach(layoutItem => {
-        if (!layoutItem.state) {
-          return;
-        }
-        const moduleState = {
-          state: () => ({ data: {} })
-        };
-        const stateKey = Object.keys(layoutItem.state)[0];
-        this.$store.registerModule(stateKey, moduleState);
-      });
+      if (!(window.location.pathname === '/dashboard/admin/manage/1')) {
+        this.layout = await getLayout();
+        // set the Vuex state modules
+        this.layout.forEach(layoutItem => {
+          if (!layoutItem.state) {
+            return;
+          }
+          const moduleState = {
+            state: () => ({ data: {} })
+          };
+          const stateKey = Object.keys(layoutItem.state)[0];
+          this.$store.registerModule(stateKey, moduleState);
+        });
+      }
     })();
     (async () => {
       await this.eventServer.init((message: eventType<object>) =>
@@ -118,22 +128,18 @@ body {
   color: #efefef;
   font-family: Karla, sans-serif;
 }
-
 body * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-size: 15px;
 }
-
 $base: 20;
-
 @for $i from 1 through 4 {
   h#{$i} {
     font-size: $base + (4-$i) * 10px;
   }
 }
-
 .container {
   height: 100vh;
   display: grid;
@@ -142,7 +148,6 @@ $base: 20;
   width: 100%;
   grid-auto-rows: 1fr;
 }
-
 .column {
   @for $i from 1 through 4 {
     &.x#{$i} {

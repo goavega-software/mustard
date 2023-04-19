@@ -28,7 +28,9 @@ export default class TextWidget extends Vue {
 
   get containerStyle() {
     return {
-      background: this.background ? this.background : "#2a9d8f"
+      background: this.background ? this.background : "#2a9d8f",
+      height: "100%",
+      width: "100%"
     };
   }
 }

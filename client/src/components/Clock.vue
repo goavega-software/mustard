@@ -96,6 +96,8 @@ export default class Clock extends Vue {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
   & .clock1,
   & .clock3 {
     flex: 1 1 auto;
