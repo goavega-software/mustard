@@ -14,6 +14,7 @@ import (
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
+	"gopkg.in/yaml.v3"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -52,18 +53,41 @@ func installGist(gistID string) {
 	gist.Install()
 }
 
-func readConfig() []byte {
-	jsonFile, err := os.Open("./config/config.json")
+func readConfig() configuration {
+	// if config.yaml is present we use that first
+	var fileContent *os.File
+	var byteContent []byte
+	var result configuration
+	isYaml := true
+	_, err := os.Stat("./config/config.yml")
+	if os.IsNotExist(err) {
+		fileContent, err = os.Open("./config/config.json")
+		isYaml = false
+	} else {
+		fileContent, err = os.Open("./config/config.yml")
+	}
+	if err != nil && !os.IsNotExist(err) {
+		log.Println(err)
+		byteContent = []byte("[]")
+		json.Unmarshal(byteContent, &result)
+		return result
+	}
+	byteContent, err = ioutil.ReadAll(fileContent)
 	if err != nil {
 		log.Println(err)
-		return []byte("[]")
+		byteContent = []byte("[]")
+		json.Unmarshal(byteContent, &result)
+		return result
 	}
-	bytes, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		log.Println(err)
-		return []byte("[]")
+	if isYaml {
+		err = yaml.Unmarshal(byteContent, &result)
+		if err != nil {
+			log.Println(err)
+		}
+		return result
 	}
-	return bytes
+	json.Unmarshal(byteContent, &result)
+	return result
 }
 
 func main() {
@@ -86,9 +110,7 @@ func main() {
 	eventListener := events.EventListener{URL: os.Getenv("KAFKA_URL"), Topic: os.Getenv("KAFKA_TOPIC"), GroupID: "mustard"}
 	eventListener.Start()
 	// read config to get widgets
-	config := readConfig()
-	var result configuration
-	json.Unmarshal([]byte(config), &result)
+	result := readConfig()
 	mustardcore.GetFactory().Process(result.Jobs)
 
 	defer eventsManager.Destroy()
