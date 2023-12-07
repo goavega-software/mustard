@@ -19,6 +19,7 @@ Mustard has 4 components:
 - Mustard relies on cron to fire events on schedule but also exposes an API to fire jobs immediately (POST /api/nudge). This API is used by the Vue client to get the data on first run instead of waiting for the events to fire on schedule.
 - Since v0.2 Mustard also supports consuming Kafka topics and forwarding those events over Server Sent Events. More details are under Kafka section.
 - Mustard supports multiple dashboards which are laidout in `config/config.json`. Each dashboard should have a unique id and is accessible over `/dashboard/{id}` URL.
+- Starting v0.7.0 Mustard supports configuration in Yaml format in `config/config.yml`. This takes precedence over json file if both are found in the directory.
 
 ### First steps
 
